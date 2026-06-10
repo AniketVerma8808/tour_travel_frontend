@@ -2,32 +2,32 @@
 
 @import "tailwindcss";
 
-/* =========================
-   Saroj Kashi Travels
-   Luxury Design System
-========================= */
+/* ==========================================
+   SARAOJ KASHI TRAVELS - LUXURY DESIGN SYSTEM
+========================================== */
 
 @theme {
   /* ===== Brand Colors ===== */
 
-  --color-primary: #d4af37;
-  --color-primary-light: #e6c55a;
-  --color-primary-dark: #b8901f;
+  --color-primary: #c9a227;
+  --color-primary-light: #e8c766;
+  --color-primary-dark: #9f7d16;
 
   /* ===== Backgrounds ===== */
 
-  --color-background: #0b0b0b;
-  --color-surface: #141414;
-  --color-surface-light: #1e1e1e;
+  --color-background: #080808;
+  --color-surface: #111111;
+  --color-surface-light: #1a1a1a;
+
   --color-card: rgba(255, 255, 255, 0.04);
 
   /* ===== Text ===== */
 
   --color-text: #ffffff;
-  --color-text-muted: #b0b0b0;
-  --color-text-soft: #8d8d8d;
+  --color-text-muted: #c3c3c3;
+  --color-text-soft: #8e8e8e;
 
-  /* ===== Borders ===== */
+  /* ===== Border ===== */
 
   --color-border: rgba(255, 255, 255, 0.08);
 
@@ -46,15 +46,16 @@
   /* ===== Shadows ===== */
 
   --shadow-gold:
-    0px 10px 30px rgba(212, 175, 55, 0.18);
+    0 0 20px rgba(201, 162, 39, 0.15),
+    0 0 40px rgba(201, 162, 39, 0.08);
 
   --shadow-card:
-    0px 10px 40px rgba(0, 0, 0, 0.35);
+    0px 15px 40px rgba(0, 0, 0, 0.35);
 }
 
-/* =========================
-   Global Reset
-========================= */
+/* ==========================================
+   GLOBAL RESET
+========================================== */
 
 * {
   margin: 0;
@@ -73,9 +74,9 @@ body {
   overflow-x: hidden;
 }
 
-/* =========================
-   Typography
-========================= */
+/* ==========================================
+   TYPOGRAPHY
+========================================== */
 
 h1,
 h2,
@@ -85,6 +86,7 @@ h5,
 h6 {
   font-family: var(--font-heading);
   color: var(--color-text);
+  font-weight: 700;
 }
 
 p {
@@ -92,9 +94,9 @@ p {
   line-height: 1.8;
 }
 
-/* =========================
-   Reusable Classes
-========================= */
+/* ==========================================
+   CONTAINER
+========================================== */
 
 .container-custom {
   width: 100%;
@@ -105,17 +107,24 @@ p {
 }
 
 .section-padding {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding: 100px 0;
 }
 
+/* ==========================================
+   GLASS CARD
+========================================== */
+
 .glass-card {
-  background: var(--color-card);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(20px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
 }
+
+/* ==========================================
+   TEXT UTILITIES
+========================================== */
 
 .gold-text {
   color: var(--color-primary);
@@ -124,72 +133,123 @@ p {
 .gradient-text {
   background: linear-gradient(
     135deg,
-    #d4af37 0%,
-    #f4dd8b 50%,
-    #d4af37 100%
+    #9f7d16 0%,
+    #e8c766 45%,
+    #fff2b3 50%,
+    #e8c766 55%,
+    #9f7d16 100%
   );
 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.section-title {
-  font-size: clamp(2rem, 4vw, 4rem);
-  font-weight: 700;
-  line-height: 1.2;
-}
-
 .section-subtitle {
   color: var(--color-primary);
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  font-size: 14px;
   font-weight: 600;
 }
 
-/* =========================
-   Buttons
-========================= */
+.section-title {
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
 
 .btn-primary {
-  background: var(--color-primary);
-  color: #000;
+  background: linear-gradient(
+    135deg,
+    #c9a227,
+    #e8c766
+  );
+
+  color: #080808;
   font-weight: 600;
-  padding: 14px 28px;
+
+  padding: 14px 30px;
+
   border-radius: 999px;
-  transition: 0.3s ease;
+
+  transition: all 0.35s ease;
+
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+
+  box-shadow: var(--shadow-gold);
 }
 
 .btn-primary:hover {
-  background: var(--color-primary-light);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
 .btn-outline {
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
-  padding: 14px 28px;
+
+  padding: 14px 30px;
+
   border-radius: 999px;
-  transition: 0.3s ease;
+
+  transition: all 0.35s ease;
 }
 
 .btn-outline:hover {
   background: var(--color-primary);
-  color: #000;
+  color: #080808;
 }
 
-/* =========================
-   Scrollbar
-========================= */
+/* ==========================================
+   GOLD GLOW
+========================================== */
+
+.gold-glow {
+  box-shadow:
+    0 0 15px rgba(201, 162, 39, 0.25),
+    0 0 30px rgba(201, 162, 39, 0.15);
+}
+
+/* ==========================================
+   NAVBAR GLASS
+========================================== */
+
+.nav-glass {
+  background: rgba(8, 8, 8, 0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ==========================================
+   HERO OVERLAY
+========================================== */
+
+.hero-overlay {
+  background:
+    linear-gradient(
+      to right,
+      rgba(8, 8, 8, 0.95),
+      rgba(8, 8, 8, 0.75),
+      rgba(8, 8, 8, 0.35)
+    );
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
 
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #111;
+  background: #111111;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -197,29 +257,45 @@ p {
   border-radius: 100px;
 }
 
-/* =========================
-   Selection
-========================= */
+/* ==========================================
+   SELECTION
+========================================== */
 
 ::selection {
   background: var(--color-primary);
-  color: #000;
+  color: #080808;
 }
 
-/* =========================
-   Images
-========================= */
+/* ==========================================
+   IMAGE
+========================================== */
 
 img {
   max-width: 100%;
   display: block;
 }
 
-/* =========================
-   Links
-========================= */
+/* ==========================================
+   LINKS
+========================================== */
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+.hover-lift {
+  transition: all 0.35s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+}
+
+.gold-border {
+  border: 1px solid rgba(201, 162, 39, 0.25);
 }

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+
+import logo from "../../assets/logo.png";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -12,13 +15,35 @@ const navLinks = [
   { label: "Contact", path: "/contact" },
 ];
 
+const mobileMenuVariants = {
+  hidden: {
+    x: "100%",
+  },
+
+  visible: {
+    x: 0,
+    transition: {
+      duration: 0.35,
+      ease: "easeInOut",
+    },
+  },
+
+  exit: {
+    x: "100%",
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut",
+    },
+  },
+};
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 40);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -28,11 +53,14 @@ const Navbar = () => {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-black/80 backdrop-blur-xl border-b border-white/10"
-            : "bg-transparent"
+      {/* Header */}
+
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+          scrolled ? "nav-glass shadow-lg" : "bg-transparent"
         }`}
       >
         <div className="container-custom">
@@ -40,15 +68,19 @@ const Navbar = () => {
             {/* Logo */}
 
             <Link to="/" className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] font-bold text-xl">
-                SK
-              </div>
+              <img
+                src={logo}
+                alt="Saroj Kashi Travels"
+                className="h-12 md:h-14 w-auto"
+              />
 
-              <div>
-                <h2 className="text-xl font-bold text-white">Saroj Kashi</h2>
+              <div className="hidden sm:block">
+                <h2 className="text-xl md:text-2xl font-semibold">
+                  Saroj Kashi
+                </h2>
 
-                <p className="text-xs tracking-[3px] uppercase text-[#D4AF37]">
-                  Tour & Travel
+                <p className="text-[11px] tracking-[4px] uppercase gold-text">
+                  Travels
                 </p>
               </div>
             </Link>
@@ -61,10 +93,8 @@ const Navbar = () => {
                   key={item.path}
                   to={item.path}
                   className={({ isActive }) =>
-                    `transition-all duration-300 text-sm font-medium ${
-                      isActive
-                        ? "text-[#D4AF37]"
-                        : "text-white hover:text-[#D4AF37]"
+                    `relative text-sm font-medium transition-all duration-300 ${
+                      isActive ? "gold-text" : "text-white hover:text-[#C9A227]"
                     }`
                   }
                 >
@@ -75,75 +105,96 @@ const Navbar = () => {
 
             {/* Desktop CTA */}
 
-            <div className="hidden lg:block">
+            <div className="hidden lg:flex items-center gap-4">
               <Link to="/booking" className="btn-primary">
                 Book Now
               </Link>
             </div>
 
-            {/* Mobile Button */}
+            {/* Mobile Menu Button */}
 
             <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="lg:hidden text-white"
+              onClick={() => setIsOpen(true)}
+              className="lg:hidden text-[#C9A227]"
             >
-              {isOpen ? <X size={30} /> : <Menu size={30} />}
+              <Menu size={30} />
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Mobile Menu */}
 
-      <div
-        className={`fixed top-0 right-0 h-screen w-[300px] bg-[#0B0B0B] z-[60] transition-all duration-300 border-l border-white/10 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="p-6">
-          <div className="flex justify-end">
-            <button onClick={() => setIsOpen(false)} className="text-white">
-              <X size={30} />
-            </button>
-          </div>
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Overlay */}
 
-          <div className="mt-10 flex flex-col gap-6">
-            {navLinks.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                onClick={() => setIsOpen(false)}
-                className={({ isActive }) =>
-                  `text-lg transition-all ${
-                    isActive
-                      ? "text-[#D4AF37]"
-                      : "text-white hover:text-[#D4AF37]"
-                  }`
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-
-            <Link
-              to="/booking"
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="btn-primary mt-5 justify-center"
+              className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50"
+            />
+
+            {/* Drawer */}
+
+            <motion.div
+              variants={mobileMenuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed top-0 right-0 h-screen w-[85%] max-w-[360px] bg-[#080808] border-l border-white/10 z-[60]"
             >
-              Book Now
-            </Link>
-          </div>
-        </div>
-      </div>
+              <div className="h-full flex flex-col p-6">
+                {/* Header */}
 
-      {/* Overlay */}
+                <div className="flex items-center justify-between">
+                  <img src={logo} alt="logo" className="h-12" />
 
-      {isOpen && (
-        <div
-          onClick={() => setIsOpen(false)}
-          className="fixed inset-0 bg-black/60 z-50"
-        />
-      )}
+                  <button onClick={() => setIsOpen(false)}>
+                    <X size={28} className="text-white" />
+                  </button>
+                </div>
+
+                {/* Links */}
+
+                <div className="flex flex-col gap-6 mt-12">
+                  {navLinks.map((item) => (
+                    <NavLink
+                      key={item.path}
+                      to={item.path}
+                      onClick={() => setIsOpen(false)}
+                      className={({ isActive }) =>
+                        `text-lg font-medium transition-all ${
+                          isActive
+                            ? "gold-text"
+                            : "text-white hover:text-[#C9A227]"
+                        }`
+                      }
+                    >
+                      {item.label}
+                    </NavLink>
+                  ))}
+                </div>
+
+                {/* CTA */}
+
+                <div className="mt-auto">
+                  <Link
+                    to="/booking"
+                    onClick={() => setIsOpen(false)}
+                    className="btn-primary w-full justify-center"
+                  >
+                    Book Now
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 };
