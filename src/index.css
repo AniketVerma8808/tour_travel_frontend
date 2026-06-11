@@ -246,13 +246,14 @@ p {
 .hero-overlay {
   background:
     linear-gradient(
-      to right,
-      rgba(8, 8, 8, 0.95),
-      rgba(8, 8, 8, 0.75),
-      rgba(8, 8, 8, 0.35)
+      90deg,
+      rgba(8, 8, 8, 0.98) 0%,
+      rgba(8, 8, 8, 0.92) 25%,
+      rgba(8, 8, 8, 0.78) 45%,
+      rgba(8, 8, 8, 0.45) 65%,
+      rgba(8, 8, 8, 0.10) 100%
     );
 }
-
 /* ==========================================
    SCROLLBAR
 ========================================== */
@@ -311,4 +312,20 @@ a {
 
 .gold-border {
   border: 1px solid rgba(201, 162, 39, 0.25);
+}
+
+
+.hero-car {
+  animation: floatCar 5s ease-in-out infinite;
+}
+
+@keyframes floatCar {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
 }
