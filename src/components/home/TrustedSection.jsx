@@ -1,107 +1,111 @@
-import { ShieldCheck, Star, Headphones, BadgeCheck } from "lucide-react";
+import {
+  ShieldCheck,
+  Star,
+  Users,
+  Clock3,
+} from "lucide-react";
 
-const stats = [
+const trustData = [
   {
-    value: "500+",
-    title: "Successful Trips",
+    icon: Users,
+    number: "7",
+    title: "Seater Comfort",
   },
-  {
-    value: "98%",
-    title: "Customer Satisfaction",
-  },
-  {
-    value: "24/7",
-    title: "Support Available",
-  },
-  {
-    value: "5★",
-    title: "Average Rating",
-  },
-];
-
-const trustPoints = [
   {
     icon: ShieldCheck,
-    title: "Safe & Secure",
-    description:
-      "Customer safety remains our highest priority on every journey.",
+    number: "100%",
+    title: "Sanitized Vehicle",
   },
   {
-    icon: BadgeCheck,
-    title: "Verified Service",
-    description:
-      "Professional service with trusted and reliable travel support.",
+    icon: Clock3,
+    number: "24/7",
+    title: "Booking Support",
   },
   {
     icon: Star,
-    title: "Premium Experience",
-    description:
-      "Comfortable travel experience designed for families and groups.",
-  },
-  {
-    icon: Headphones,
-    title: "24/7 Assistance",
-    description: "Quick support whenever you need help during your trip.",
+    number: "AC",
+    title: "Premium Comfort",
   },
 ];
 
 const TrustedSection = () => {
   return (
-    <section className="section-padding relative">
-      <div className="container-custom">
-        {/* Section Heading */}
+    <section className="section-padding bg-gradient-to-b from-[#080808] to-[#111111] relative overflow-hidden">
+      {/* Glow */}
+
+      <div className="absolute top-0 left-0 w-80 h-80 bg-[#C9A227]/10 blur-[150px]" />
+
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-[#C9A227]/10 blur-[150px]" />
+
+      <div className="container-custom relative z-10">
+        {/* Heading */}
 
         <div className="text-center max-w-3xl mx-auto">
-          <span className="section-subtitle">Trusted By Travelers</span>
+          <span className="section-subtitle">
+            Trusted By Travelers
+          </span>
 
           <h2 className="section-title mt-4">
-            Travel With Confidence &
-            <span className="gold-text"> Peace Of Mind</span>
+            Why Customers
+            <span className="gradient-text block">
+              Choose Us
+            </span>
           </h2>
 
-          <p className="mt-6">
-            We are committed to delivering safe, comfortable and memorable
-            travel experiences with premium service standards.
+          <p className="mt-6 max-w-2xl mx-auto">
+            Experience premium Innova Crysta travel
+            service with professional drivers, transparent
+            pricing and 24/7 availability for local and
+            outstation journeys.
           </p>
         </div>
 
-        {/* Stats */}
+        {/* Cards */}
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mt-16">
-          {stats.map((item, index) => (
-            <div key={index} className="glass-card p-8 text-center">
-              <h3 className="text-4xl md:text-5xl font-bold gold-text">
-                {item.value}
-              </h3>
-
-              <p className="mt-3">{item.title}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Trust Cards */}
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
-          {trustPoints.map((item, index) => {
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mt-14">
+          {trustData.map((item, index) => {
             const Icon = item.icon;
 
             return (
               <div
                 key={index}
-                className="glass-card p-7 transition-all duration-300 hover:-translate-y-2"
+                className="glass-card p-6 lg:p-8 text-center hover-lift"
               >
-                <div className="w-14 h-14 rounded-full border border-[#D4AF37]/30 flex items-center justify-center mb-5">
-                  <Icon size={26} className="text-[#D4AF37]" />
+                <div className="w-14 h-14 lg:w-16 lg:h-16 mx-auto rounded-full bg-[#C9A227]/10 flex items-center justify-center">
+                  <Icon
+                    size={28}
+                    className="text-[#C9A227]"
+                  />
                 </div>
 
-                <h3 className="text-xl font-semibold text-white mb-3">
-                  {item.title}
+                <h3 className="gradient-text text-3xl lg:text-4xl font-bold mt-5">
+                  {item.number}
                 </h3>
 
-                <p>{item.description}</p>
+                <p className="mt-3 text-sm lg:text-base">
+                  {item.title}
+                </p>
               </div>
             );
           })}
+        </div>
+
+        {/* Bottom Bar */}
+
+        <div className="glass-card p-6 lg:p-8 mt-14 text-center">
+          <h3 className="text-2xl lg:text-4xl font-bold">
+            Your Trusted Partner For
+            <span className="gradient-text block mt-2">
+              Luxury Travel Across
+              Varanasi & Uttar Pradesh
+            </span>
+          </h3>
+
+          <p className="mt-5 max-w-3xl mx-auto">
+            Comfortable seating, professional chauffeur,
+            luggage space and premium travel experience
+            for families, corporate clients and tourists.
+          </p>
         </div>
       </div>
     </section>
