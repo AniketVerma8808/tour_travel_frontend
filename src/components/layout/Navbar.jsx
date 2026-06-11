@@ -13,6 +13,7 @@ const navLinks = [
   { label: "Packages", path: "/packages" },
   { label: "Reviews", path: "/reviews" },
   { label: "Contact", path: "/contact" },
+  { label: "Gallery", path: "/gallery" },
 ];
 
 const mobileMenuVariants = {
