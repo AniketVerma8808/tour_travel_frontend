@@ -2,7 +2,7 @@ import ServicesHero from "../components/services/ServicesHero";
 import ServiceDetails from "../components/services/ServiceDetails";
 import ServiceProcess from "../components/services/ServiceProcess";
 import ServiceBenefits from "../components/services/ServiceBenefits";
-import ServicesCTA from "../components/services/ServicesCTA";
+import CTA from "../components/common/CTA";
 
 const Services = () => {
   return (
@@ -11,7 +11,13 @@ const Services = () => {
       <ServiceDetails />
       <ServiceProcess />
       <ServiceBenefits />
-      <ServicesCTA />
+      <CTA
+        title="Ready To Travel"
+        highlight="In Comfort & Luxury?"
+        description="Book your premium Innova Crysta today and enjoy a safe, comfortable and memorable journey."
+        showWhatsapp={false}
+        bgClass="bg-[#080808]"
+      />
     </>
   );
 };
