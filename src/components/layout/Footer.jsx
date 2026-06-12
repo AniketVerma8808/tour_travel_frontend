@@ -13,37 +13,34 @@ import {
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 
-
 const Footer = () => {
   return (
-    <footer className="relative bg-[#080808] border-t border-[#C9A227]/10 overflow-hidden">
-      {/* Background Glow */}
-
-      <div className="absolute top-0 left-0 w-72 h-72 bg-[#C9A227]/10 blur-[140px]" />
-
-      <div className="absolute bottom-0 right-0 w-72 h-72 bg-[#C9A227]/10 blur-[140px]" />
-
-      <div className="container-custom relative z-10">
+    <footer className="relative bg-[#080808] border-t border-[#C9A227]/10">
+      <div className="container-custom">
         {/* Top Footer */}
 
         <div className="py-16 grid lg:grid-cols-4 md:grid-cols-2 gap-10">
           {/* Company */}
-          <div className="hover-lift">
-<img
-  src={logo}
-  alt="Saroj Kashi Travels"
-  className="w-28 h-auto object-contain transition-all duration-500 hover:scale-105"
-/>
+
+          <div>
+            <img
+              src={logo}
+              alt="Saroj Kashi Travels"
+              className="w-28 h-auto object-contain"
+            />
+
             <p className="mt-5">
-              Premium travel service for Airport Transfers,
-              Kashi Darshan, Outstation Tours and Family
-              Trips with comfort, safety and reliability.
+              Premium travel service for Airport
+              Transfers, Kashi Darshan, Outstation
+              Tours and Family Trips with comfort,
+              safety and reliability.
             </p>
           </div>
+
           {/* Quick Links */}
 
-          <div className="hover-lift">
-            <h4 className="text-xl font-semibold mb-5">
+          <div>
+            <h4 className="text-xl mb-5">
               Quick Links
             </h4>
 
@@ -73,27 +70,9 @@ const Footer = () => {
                 <li key={item.label}>
                   <Link
                     to={item.path}
-                    className="
-                      group
-                      flex
-                      items-center
-                      gap-2
-                      text-zinc-300
-                      hover:text-[#C9A227]
-                      transition-all
-                      duration-300
-                      hover:translate-x-2
-                    "
+                    className="flex items-center gap-2 text-zinc-300 hover:text-[#C9A227] transition-colors duration-300"
                   >
-                    <ChevronRight
-                      size={16}
-                      className="
-                        transition-all
-                        duration-300
-                        group-hover:translate-x-1
-                      "
-                    />
-
+                    <ChevronRight size={16} />
                     {item.label}
                   </Link>
                 </li>
@@ -103,29 +82,29 @@ const Footer = () => {
 
           {/* Services */}
 
-          <div className="hover-lift">
-            <h4 className="text-xl font-semibold mb-5">
+          <div>
+            <h4 className="text-xl mb-5">
               Our Services
             </h4>
 
             <ul className="space-y-3 text-zinc-300">
-              <li className="transition-all duration-300 hover:text-[#C9A227] hover:translate-x-2 cursor-pointer">
+              <li className="hover:text-[#C9A227] transition-colors duration-300">
                 Airport Transfer
               </li>
 
-              <li className="transition-all duration-300 hover:text-[#C9A227] hover:translate-x-2 cursor-pointer">
+              <li className="hover:text-[#C9A227] transition-colors duration-300">
                 Kashi Darshan
               </li>
 
-              <li className="transition-all duration-300 hover:text-[#C9A227] hover:translate-x-2 cursor-pointer">
+              <li className="hover:text-[#C9A227] transition-colors duration-300">
                 Outstation Tours
               </li>
 
-              <li className="transition-all duration-300 hover:text-[#C9A227] hover:translate-x-2 cursor-pointer">
+              <li className="hover:text-[#C9A227] transition-colors duration-300">
                 Wedding Travel
               </li>
 
-              <li className="transition-all duration-300 hover:text-[#C9A227] hover:translate-x-2 cursor-pointer">
+              <li className="hover:text-[#C9A227] transition-colors duration-300">
                 Railway Pickup
               </li>
             </ul>
@@ -133,16 +112,16 @@ const Footer = () => {
 
           {/* Contact */}
 
-          <div className="hover-lift">
-            <h4 className="text-xl font-semibold mb-5">
+          <div>
+            <h4 className="text-xl mb-5">
               Contact Info
             </h4>
 
             <div className="space-y-4">
-              <div className="flex gap-3 transition-all duration-300 hover:translate-x-2">
+              <div className="flex gap-3">
                 <Phone
                   size={18}
-                  className="text-[#C9A227] mt-1"
+                  className="gold-text mt-1"
                 />
 
                 <span>
@@ -150,10 +129,10 @@ const Footer = () => {
                 </span>
               </div>
 
-              <div className="flex gap-3 transition-all duration-300 hover:translate-x-2">
+              <div className="flex gap-3">
                 <Mail
                   size={18}
-                  className="text-[#C9A227] mt-1"
+                  className="gold-text mt-1"
                 />
 
                 <span>
@@ -161,15 +140,14 @@ const Footer = () => {
                 </span>
               </div>
 
-              <div className="flex gap-3 transition-all duration-300 hover:translate-x-2">
+              <div className="flex gap-3">
                 <MapPin
                   size={18}
-                  className="text-[#C9A227] mt-1"
+                  className="gold-text mt-1"
                 />
 
                 <span>
-                  Varanasi,
-                  Uttar Pradesh,
+                  Varanasi, Uttar Pradesh,
                   India
                 </span>
               </div>
@@ -180,44 +158,14 @@ const Footer = () => {
             <div className="flex gap-4 mt-6">
               <a
                 href="#"
-                className="
-                  w-11
-                  h-11
-                  rounded-full
-                  border
-                  border-[#C9A227]/20
-                  flex
-                  items-center
-                  justify-center
-                  transition-all
-                  duration-500
-                  hover:bg-[#C9A227]
-                  hover:text-black
-                  hover:-translate-y-2
-                  hover:shadow-[0_0_25px_rgba(201,162,39,0.45)]
-                "
+                className="w-11 h-11 rounded-full border border-[#C9A227]/20 flex items-center justify-center hover:bg-[#C9A227] hover:text-black transition-all duration-300"
               >
                 <FaFacebookF size={18} />
               </a>
 
               <a
                 href="#"
-                className="
-                  w-11
-                  h-11
-                  rounded-full
-                  border
-                  border-[#C9A227]/20
-                  flex
-                  items-center
-                  justify-center
-                  transition-all
-                  duration-500
-                  hover:bg-[#C9A227]
-                  hover:text-black
-                  hover:-translate-y-2
-                  hover:shadow-[0_0_25px_rgba(201,162,39,0.45)]
-                "
+                className="w-11 h-11 rounded-full border border-[#C9A227]/20 flex items-center justify-center hover:bg-[#C9A227] hover:text-black transition-all duration-300"
               >
                 <FaInstagram size={18} />
               </a>
@@ -240,24 +188,14 @@ const Footer = () => {
           <div className="flex items-center gap-6 text-sm text-zinc-400">
             <Link
               to="/privacy-policy"
-              className="
-                transition-all
-                duration-300
-                hover:text-[#C9A227]
-                hover:-translate-y-1
-              "
+              className="hover:text-[#C9A227] transition-colors duration-300"
             >
               Privacy Policy
             </Link>
 
             <Link
               to="/terms"
-              className="
-                transition-all
-                duration-300
-                hover:text-[#C9A227]
-                hover:-translate-y-1
-              "
+              className="hover:text-[#C9A227] transition-colors duration-300"
             >
               Terms & Conditions
             </Link>
