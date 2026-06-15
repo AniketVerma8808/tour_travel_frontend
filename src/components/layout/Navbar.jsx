@@ -4,6 +4,7 @@ import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import logo from "../../assets/logo.png";
+import BookingPopup from "../common/BookingPopup";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -17,30 +18,21 @@ const navLinks = [
 ];
 
 const mobileMenuVariants = {
-  hidden: {
-    x: "100%",
-  },
-
+  hidden: { x: "100%" },
   visible: {
     x: 0,
-    transition: {
-      duration: 0.35,
-      ease: "easeInOut",
-    },
+    transition: { duration: 0.35, ease: "easeInOut" },
   },
-
   exit: {
     x: "100%",
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-    },
+    transition: { duration: 0.3, ease: "easeInOut" },
   },
 };
 
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [bookingOpen, setBookingOpen] = useState(false);
 
   return (
     <>
@@ -66,15 +58,14 @@ const Navbar = () => {
             {/* Desktop Menu */}
 
             <div className="hidden lg:flex items-center gap-10">
-              <nav className="flex items-center gap-8">
+               <nav className="flex items-center gap-8">
                 {navLinks.map((item) => (
                   <NavLink
                     key={item.path}
                     to={item.path}
                     className={({ isActive }) =>
-                      `nav-link text-sm uppercase tracking-[2px] ${isActive
-                        ? "gold-text active"
-                        : "text-[#111111]"
+                      `nav-link text-sm uppercase tracking-[2px] ${
+                        isActive ? "gold-text active" : "text-[#111111]"
                       }`
                     }
                   >
@@ -83,16 +74,18 @@ const Navbar = () => {
                 ))}
               </nav>
 
-              <Link to="/booking" className="btn-primary">
+               <button
+                onClick={() => setBookingOpen(true)}
+                className="btn-primary"
+              >
                 Book Now
-              </Link>
+              </button>
             </div>
 
             {/* Mobile Menu Button */}
 
             <button
               onClick={() => setIsOpen(true)}
-              // className="lg:hidden text-[#C9A227]"
               className="lg:hidden text-[#111111]"
 
             >
@@ -102,8 +95,13 @@ const Navbar = () => {
         </div>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* ================= BOOKING POPUP ================= */}
+    <BookingPopup
+        isOpen={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+      />
 
+      {/* ================= MOBILE MENU ================= */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -160,13 +158,15 @@ const Navbar = () => {
                 {/* Mobile CTA */}
 
                 <div className="mt-auto">
-                  <Link
-                    to="/booking"
-                    onClick={() => setIsOpen(false)}
+                    <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      setBookingOpen(true);
+                    }}
                     className="btn-primary w-full justify-center"
                   >
                     Book Now
-                  </Link>
+                  </button>
                 </div>
               </div>
             </motion.div>
