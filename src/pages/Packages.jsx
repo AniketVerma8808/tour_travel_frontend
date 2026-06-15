@@ -6,23 +6,23 @@ import { useState } from "react";
 
 const Packages = () => {
   const [filters, setFilters] = useState({
-  search: "",
-  duration: "",
-  category: "",
-  vehicle: "",
-});
+    search: "",
+    duration: "",
+    category: "",
+    vehicle: "",
+  });
   return (
     <>
       <PackagesHero />
-      
-      <PackageSearch
-  filters={filters}
-  setFilters={setFilters}
-/>
 
-<FeaturedPackages
-  filters={filters}
-/>
+      <PackageSearch
+        filters={filters}
+        setFilters={setFilters}
+      />
+
+      <FeaturedPackages
+        filters={filters}
+      />
 
 
       <CTA
@@ -31,7 +31,7 @@ const Packages = () => {
         description="Book your luxury travel package today and enjoy a safe, comfortable and memorable journey."
         showWhatsapp={false}
         bgClass="bg-[#080808]"
-      /> 
+      />
     </>
   );
 };

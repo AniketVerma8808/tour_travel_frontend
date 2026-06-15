@@ -61,6 +61,7 @@ const PackageSearch = ({
 
                 <motion.div
                     initial={{
+                        
                         opacity: 0,
                         y: 40,
                     }}
