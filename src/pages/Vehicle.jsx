@@ -1,20 +1,15 @@
-import VehicleHero from "../components/vehicle/VehicleHero";
-import FeaturedFleet from "../components/vehicle/FeaturedFleet";
-import VehicleFeatures from "../components/vehicle/VehicleFeatures";
-import WhyChooseOurFleet from "../components/vehicle/WhyChooseOurFleet";
+
 import CTA from "../components/common/CTA";
+import FeaturedFleet from "../components/Vehicle/FeaturedFleet";
+import VehicleFeatures from "../components/Vehicle/VehicleFeatures";
+import VehicleHero from "../components/Vehicle/VehicleHero";
 
 const Vehicle = () => {
   return (
     <>
       <VehicleHero />
-
-      <FeaturedFleet />
-
       <VehicleFeatures />
-
-      <WhyChooseOurFleet />
-
+      <FeaturedFleet />
       <CTA
         title="Ready To Book "
         highlight="Your Ride?"
