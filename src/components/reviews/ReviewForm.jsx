@@ -4,11 +4,11 @@ import {
   ShieldCheck,
   BadgeCheck,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { useState } from "react";
 
 const ReviewForm = ({ addReview }) => {
   const [loading, setLoading] = useState(false);
-
   const [rating, setRating] = useState(0);
 
   const [formData, setFormData] = useState({
@@ -48,12 +48,23 @@ const handleSubmit = async (e) => {
 };
 
   return (
-    <section className="section-padding">
+   <motion.section
+  initial={{ opacity: 0, y: 60 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7 }}
+  className="section-padding"
+>
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* Left Side */}
 
-          <div>
+    <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <span className="section-subtitle">
               Share Your Experience
             </span>
@@ -105,11 +116,16 @@ const handleSubmit = async (e) => {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Side */}
-
-          <div className="glass-card p-8 lg:p-10">
+  <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="glass-card p-8 lg:p-10"
+          >
             <h3 className="text-3xl text-center">
               Leave A Review
             </h3>
@@ -208,10 +224,10 @@ const handleSubmit = async (e) => {
               Reviews become visible after admin
               approval.
             </p>
-          </div>
+          </motion.div>
         </div>
-      </div>
-    </section>
+        </div>
+    </motion.section>
   );
 };
 

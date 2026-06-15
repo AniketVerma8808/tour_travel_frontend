@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 const benefits = [
   "Premium Innova Crysta",
   "Professional Drivers",
@@ -13,7 +15,12 @@ const ServiceBenefits = () => {
 
       <div className="container-custom">
 
-        <div className="glass-card p-8 lg:p-12">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="glass-card p-8 lg:p-12"
+        >
 
           <div className="text-center">
 
@@ -32,18 +39,23 @@ const ServiceBenefits = () => {
 
           <div className="grid md:grid-cols-2 gap-5 mt-12">
 
-            {benefits.map((item) => (
-              <div
+            {benefits.map((item, index) => (
+              <motion.div
                 key={item}
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.03 }}
                 className="border border-[#C9A227]/10 rounded-2xl p-5"
               >
                 {item}
-              </div>
+              </motion.div>
             ))}
 
           </div>
 
-        </div>
+        </motion.div>
 
       </div>
 

@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 const stats = [
   {
     number: "500+",
@@ -17,32 +19,86 @@ const stats = [
   },
 ];
 
+// container animation (stagger effect)
+const containerVariant = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
 
+// card animation
+const cardVariant = {
+  hidden: {
+    opacity: 0,
+    y: 60,
+    scale: 0.85,
+  },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
 
 const JourneyTimeline = () => {
   return (
-     <section className="section-padding bg-[#080808]">
+    <section className="section-padding bg-[#080808]">
 
       <div className="container-custom">
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* Grid Wrapper */}
+        <motion.div
+          variants={containerVariant}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
 
           {stats.map((item, index) => (
-            <div
+            <motion.div
               key={index}
-              className="glass-card p-8 text-center"
+              variants={cardVariant}
+              whileHover={{
+                y: -10,
+                scale: 1.05,
+                boxShadow:
+                  "0 0 25px rgba(201,162,39,0.15)",
+              }}
+              className="glass-card p-8 text-center cursor-pointer"
             >
-              <h3 className="gradient-text text-5xl font-bold">
-                {item.number}
-              </h3>
 
-              <p className="mt-3">
+              {/* Number */}
+              <motion.h3
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.6 }}
+                className="gradient-text text-5xl font-bold"
+              >
+                {item.number}
+              </motion.h3>
+
+              {/* Title */}
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mt-3 text-[#c3c3c3]"
+              >
                 {item.title}
-              </p>
-            </div>
+              </motion.p>
+
+            </motion.div>
           ))}
 
-        </div>
+        </motion.div>
 
       </div>
 

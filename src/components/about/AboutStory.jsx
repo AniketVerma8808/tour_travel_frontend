@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 const AboutStory = () => {
   return (
     <section className="section-padding bg-[#0d0d0d]">
@@ -5,7 +6,12 @@ const AboutStory = () => {
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <span className="section-subtitle">
               Our Story
             </span>
@@ -16,9 +22,14 @@ const AboutStory = () => {
                 A Taxi Service
               </span>
             </h2>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: 60 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <p>
               Saroj Kashi Travels was founded with
               a simple mission — to provide safe,
@@ -34,7 +45,7 @@ const AboutStory = () => {
               journey is smooth, reliable and
               memorable.
             </p>
-          </div>
+          </motion.div>
         </div>
 
       </div>
