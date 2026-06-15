@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
@@ -40,17 +40,7 @@ const mobileMenuVariants = {
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <>
@@ -58,12 +48,11 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          scrolled ? "nav-glass" : "bg-transparent"
-        }`}
+        className="fixed top-0 left-0 w-full z-50 navbar-white"
+
       >
         <div className="container-custom">
-          <div className="h-24 flex items-center justify-between">
+          <div className="h-20 md:h-22 lg:h-24 flex items-center justify-between">
             {/* Logo */}
 
             <Link to="/" className="flex items-center">
@@ -83,10 +72,9 @@ const Navbar = () => {
                     key={item.path}
                     to={item.path}
                     className={({ isActive }) =>
-                      `relative text-sm uppercase tracking-wider font-medium transition-all duration-300 ${
-                        isActive
-                          ? "gold-text"
-                          : "text-white hover:text-[#C9A227]"
+                      `nav-link text-sm uppercase tracking-[2px] ${isActive
+                        ? "gold-text active"
+                        : "text-[#111111]"
                       }`
                     }
                   >
@@ -104,7 +92,9 @@ const Navbar = () => {
 
             <button
               onClick={() => setIsOpen(true)}
-              className="lg:hidden text-[#C9A227]"
+              // className="lg:hidden text-[#C9A227]"
+              className="lg:hidden text-[#111111]"
+
             >
               <Menu size={30} />
             </button>
@@ -130,7 +120,7 @@ const Navbar = () => {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed top-0 right-0 h-screen w-[85%] max-w-[360px] bg-[#080808] border-l border-[#C9A227]/20 z-[60]"
+              className="fixed top-0 right-0 h-screen w-[85%] max-w-[360px] bg-white border-l border-[#C9A227]/20 z-[60]"
             >
               <div className="h-full flex flex-col p-6">
                 {/* Mobile Header */}
@@ -143,7 +133,7 @@ const Navbar = () => {
                   />
 
                   <button onClick={() => setIsOpen(false)}>
-                    <X size={28} className="text-white" />
+                    <X size={28} className="text-[#111111]" />
                   </button>
                 </div>
 
@@ -156,10 +146,9 @@ const Navbar = () => {
                       to={item.path}
                       onClick={() => setIsOpen(false)}
                       className={({ isActive }) =>
-                        `text-lg transition-all duration-300 ${
-                          isActive
-                            ? "gold-text"
-                            : "text-white hover:text-[#C9A227]"
+                        `text-lg transition-all duration-300 ${isActive
+                          ? "gold-text"
+                          : "text-[#111111] hover:text-[#C9A227]"
                         }`
                       }
                     >
