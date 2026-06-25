@@ -1,18 +1,54 @@
-import { ArrowRight, PhoneCall, Star } from "lucide-react";
-import heroInnova from "../../assets/hero-innova.webp";
+import { useState } from "react";
+import { ArrowRight, PhoneCall, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 
-const HeroSection = () => {
+import "swiper/css";
+import "swiper/css/effect-fade";
+import "swiper/css/navigation";
+
+
+import hero1 from "../../assets/hero1.jpg";
+import hero2 from "../../assets/hero2.jpg";
+import hero3 from "../../assets/hero3.jpg";
+import hero4 from "../../assets/hero4.jpg";
+
+const HeroSection = ({ onBookNow }) => {
+  const heroImages = [hero1, hero2, hero3, hero4];
+
   return (
-    <section className="relative min-h-screen overflow-hidden  flex items-center">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: `url(${heroInnova})`,
-          backgroundSize: "cover",
-          backgroundPosition: "right center",
-        }}
-      />
+    <section className="relative min-h-screen overflow-hidden flex items-center">
+      {/* Background slider */}
+
+      <div className="absolute inset-0 z-0">
+        <Swiper
+          modules={[Autoplay, EffectFade, Navigation]}
+          effect="fade"
+          loop
+          navigation={{
+            prevEl: ".hero-prev",
+            nextEl: ".hero-next",
+          }}
+          autoplay={{
+            delay: 3500,
+            disableOnInteraction: false,
+          }}
+          speed={1200}
+          className="h-full w-full"
+        >
+
+          {heroImages.map((img, index) => (
+            <SwiperSlide key={index}>
+              <div
+                className="w-full h-screen bg-cover bg-center hero-image"
+                style={{
+                  backgroundImage: `url(${img})`,
+                }}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
 
       {/* Gold Glow */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#C9A227]/10 blur-[180px]" />
@@ -22,11 +58,43 @@ const HeroSection = () => {
       {/* Overlay */}
       <div className="absolute inset-0 hero-overlay" />
 
-      <div className="container-custom relative z-20">
-        <div className="max-w-3xl">
-          {/* Premium Badge */}
+      {/* Left Arrow */}
+      <button
+        className="hidden md:flex hero-prev absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30
+  w-12 h-12 md:w-14 md:h-14 rounded-full
+  bg-black/40 backdrop-blur-md
+  border border-white/20
+  text-white
+  hover:bg-[#C9A227]
+  hover:text-black
+  hover:border-[#C9A227]
+  transition-all duration-300
+  flex items-center justify-center"
+      >
+        <ChevronLeft size={28} />
+      </button>
 
-          <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full border border-[#C9A227]/20 bg-black/30 backdrop-blur-2xl  shadow-[0_0_30px_rgba(201,162,39,0.12)]">
+      {/* Right Arrow */}
+      <button
+        className="hidden md:flex  hero-next absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30
+  w-12 h-12 md:w-14 md:h-14 rounded-full
+  bg-black/40 backdrop-blur-md
+  border border-white/20
+  text-white
+  hover:bg-[#C9A227]
+  hover:text-black
+  hover:border-[#C9A227]
+  transition-all duration-300
+  flex items-center justify-center"
+      >
+        <ChevronRight size={28} />
+      </button>
+
+      <div className="container-custom relative z-20">
+
+        <div className="max-w-3xl text-center md:text-left">
+          {/* Premium Badge */}
+          <div className="inline-flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2.5 md:py-3 rounded-full border border-[#C9A227]/20 bg-black/30 backdrop-blur-2xl shadow-[0_0_30px_rgba(201,162,39,0.12)]">
             <Star
               size={14}
               className="text-[#C9A227] fill-[#C9A227]"
@@ -55,17 +123,22 @@ const HeroSection = () => {
           </p>
 
           {/* Buttons */}
-
-          <div className="flex flex-wrap gap-8">
-            <button className="btn-primary px-8 py-4">
+          <div className="flex flex-wrap justify-center md:justify-start gap-4 md:gap-8">
+            <button
+             onClick={onBookNow}
+              className="btn-primary px-8 py-4"
+            >
               Book Now
               <ArrowRight size={18} />
             </button>
 
-            <button className="btn-outline flex items-center gap-2 px-8 py-4 backdrop-blur-xl">
+            <a
+              href="tel:+919695957772"
+              className="btn-outline flex items-center gap-2 px-8 py-4 backdrop-blur-xl"
+            >
               <PhoneCall size={18} />
               Call Now
-            </button>
+            </a>
           </div>
 
           {/* Stats */}

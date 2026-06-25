@@ -43,16 +43,16 @@ const ServiceDetails = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <span className="section-subtitle">
+          {/* <span className="section-subtitle">
             What We Offer
-          </span>
+          </span> */}
 
-          <h2 className="section-title mt-4">
+          {/* <h2 className="section-title mt-4">
             Designed For Every
             <span className="gradient-text block">
               Travel Requirement
             </span>
-          </h2>
+          </h2> */}
         </motion.div>
 
         <motion.div
