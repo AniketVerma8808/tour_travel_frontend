@@ -146,7 +146,7 @@ const HeroSection = ({ onBookNow }) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
             <div className="glass-card p-5 md:p-6 text-center border border-[#C9A227]/10">
               <h3 className="text-3xl md:text-4xl font-bold gradient-text">
-                500+
+                1000+
               </h3>
 
               <p className="text-zinc-300 text-sm mt-2 tracking-wide">

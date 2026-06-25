@@ -10,6 +10,7 @@ import Contact from "../pages/Contact";
 import NotFound from "../pages/NotFound";
 import MainLayout from "../components/layout/MobileMenu";
 import ScrollToTop from "../components/common/ScrollToTop";
+import GalleryPage from "../pages/GalleryPage";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
         <Route path="packages" element={<Packages />} />
         <Route path="reviews" element={<Reviews />} />
         <Route path="contact" element={<Contact />} />
+        <Route path="gallery" element={<GalleryPage />} />
       <Route path="*" element={<NotFound />} />
       </Route>
 

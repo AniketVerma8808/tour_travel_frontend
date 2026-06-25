@@ -9,7 +9,7 @@ import BookingPopup from "../common/BookingPopup";
 const navLinks = [
   { label: "Home", path: "/" },
   { label: "About", path: "/about" },
-  { label: "Services", path: "/services" },
+  { label: "Premium Services", path: "/services" },
   { label: "Vehicle", path: "/vehicle" },
   { label: "Packages", path: "/packages" },
   { label: "Reviews", path: "/reviews" },
@@ -58,7 +58,7 @@ const Navbar = () => {
             {/* Desktop Menu */}
 
             <div className="hidden lg:flex items-center gap-10">
-               <nav className="flex items-center gap-8">
+               <nav className="flex items-center gap-6">
                 {navLinks.map((item) => (
                   <NavLink
                     key={item.path}
