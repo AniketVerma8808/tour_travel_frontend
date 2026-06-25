@@ -140,17 +140,19 @@ const Footer = () => {
                 </span>
               </div>
 
-              <div className="flex gap-3">
-                <MapPin
-                  size={18}
-                  className="gold-text mt-1"
-                />
+              <a
+                href="https://maps.app.goo.gl/B1JiZpaqcqubYGW77"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex gap-3 hover:text-[#C9A227] transition-colors duration-300"
+              >
+                <MapPin size={18} className="gold-text mt-1" />
 
                 <span>
-                  Varanasi, Uttar Pradesh,
-                  India
+                  Varanasi, Uttar Pradesh, India
                 </span>
-              </div>
+              </a>
+
             </div>
 
             {/* Social */}

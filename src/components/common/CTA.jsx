@@ -12,6 +12,8 @@ const CTA = ({
   description = "Airport Transfer, Kashi Darshan, Outstation Tours and Premium Innova Crysta bookings available 24/7.",
   showWhatsapp = true,
   bgClass = "",
+  onBookNow,
+  callNumber = "+919695957772",
 }) => {
   return (
     <section
@@ -71,7 +73,7 @@ const CTA = ({
 
             {/* Call Button */}
             <motion.a
-              href="tel:+918808761609"
+              href={`tel:${callNumber}`}
               whileHover={{
                 scale: 1.08,
                 boxShadow:
@@ -87,7 +89,7 @@ const CTA = ({
             {/* WhatsApp / Book Button */}
             {showWhatsapp ? (
               <motion.a
-                href="https://wa.me/918808761609"
+                href={`https://wa.me/${callNumber.replace("+", "")}`}
                 target="_blank"
                 rel="noreferrer"
                 whileHover={{
@@ -102,6 +104,7 @@ const CTA = ({
               </motion.a>
             ) : (
               <motion.button
+                onClick={onBookNow}   
                 whileHover={{ scale: 1.08 }}
                 whileTap={{ scale: 0.95 }}
                 className="btn-outline flex items-center gap-2"
