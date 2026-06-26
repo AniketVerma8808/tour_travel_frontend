@@ -2,20 +2,18 @@ import React from "react";
 import { motion } from "framer-motion";
 import img1 from "../assets/gallery/travel1.jpeg"
 import img2 from "../assets/gallery/travel2.jpeg"
-import img3 from "../assets/gallery/udhyam.jpeg"
+import img3 from "../assets/gallery/travel3.jpeg"
+import img4 from "../assets/gallery/travel4.jpeg"
+import img5 from "../assets/gallery/travel5.jpeg"
+import img6 from "../assets/gallery/udhyam.jpeg"
 
 const images = [
     img1,
     img2,
     img3,
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4",
-    "https://images.unsplash.com/photo-1528127269322-539801943592",
-    "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-    "https://images.unsplash.com/photo-1472214103451-9374bd1c798e",
-    "https://images.unsplash.com/photo-1530789253388-582c481c54b0",
-    "https://images.unsplash.com/photo-1518684079-3c830dcef090",
-    "https://images.unsplash.com/photo-1469474968028-56623f02e42e",
-    "https://images.unsplash.com/photo-1527631746610-bca00a040d60",
+    img4,
+    img5,
+    img6,
 ];
 
 const GalleryPage = () => {
@@ -66,34 +64,31 @@ const GalleryPage = () => {
                     <h2 className="section-subtitle">Explore Moments</h2>
                     <h3 className="section-title mt-2">Travel Memories</h3>
                 </div>
-
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-
                     {images.map((img, index) => (
                         <motion.div
                             key={index}
-                            whileHover={{ scale: 1.05 }}
+                            whileHover={{ scale: 1.03 }}
                             transition={{ duration: 0.3 }}
-                            className="glass-card overflow-hidden rounded-[var(--radius-lg)] hover-lift"
+                            className="glass-card rounded-[var(--radius-lg)] overflow-hidden hover-lift"
                         >
-                            <div className="relative group">
+                            <div className="h-[350px] bg-white flex items-center justify-center p-4 relative group">
                                 <img
                                     src={img}
                                     alt={`gallery-${index}`}
-                                    className="w-full h-92 object-cover transition duration-500 group-hover:scale-110"
+                                    className="max-w-full max-h-full object-contain transition duration-500 group-hover:scale-105"
                                 />
 
-                                {/* GOLD OVERLAY */}
-                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300"
+                                <div
+                                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300"
                                     style={{
                                         background:
-                                            "linear-gradient(to top, rgba(201,162,39,0.25), transparent)"
+                                            "linear-gradient(to top, rgba(201,162,39,0.2), transparent)",
                                     }}
                                 />
                             </div>
                         </motion.div>
                     ))}
-
                 </div>
             </div>
         </div>
