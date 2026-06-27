@@ -1,22 +1,18 @@
-import React from "react";
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
 import {
   Star,
   Quote,
   MapPin,
   BadgeCheck,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
-import {
-  Swiper,
-  SwiperSlide,
-} from "swiper/react";
-
-import {
-  Pagination,
-  Navigation,
-  Autoplay,
-} from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -29,7 +25,7 @@ const dummyReviews = [
     city: "Lucknow",
     rating: 5,
     review:
-      "Outstanding service! The Innova Crysta was spotless, driver was extremely polite and our Varanasi trip became memorable. Highly recommended.",
+      "Outstanding service! The Innova Crysta was spotless, the driver was extremely polite, and our Varanasi trip became memorable. Highly recommended.",
   },
   {
     id: 2,
@@ -37,7 +33,7 @@ const dummyReviews = [
     city: "Delhi",
     rating: 5,
     review:
-      "Very comfortable journey with excellent customer support. Booking process was smooth and vehicle arrived exactly on time.",
+      "Very comfortable journey with excellent customer support. Booking process was smooth and the vehicle arrived exactly on time.",
   },
   {
     id: 3,
@@ -68,226 +64,269 @@ const dummyReviews = [
 const TestimonialsSlider = ({
   reviews = dummyReviews,
 }) => {
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+  const swiperRef = useRef(null);
+
   return (
-    <section className="section-padding bg-[#080808] relative overflow-hidden">
+    <section className="testimonial-section section-padding relative overflow-hidden bg-[#080808]">
 
-      {/* Glow */}
+      {/* Background */}
 
-      <div className="absolute left-0 top-0 w-[500px] h-[500px] bg-[#C9A227]/10 blur-[180px]" />
+      <div className="absolute inset-0 overflow-hidden">
 
-      <div className="absolute right-0 bottom-0 w-[500px] h-[500px] bg-[#C9A227]/10 blur-[180px]" />
+        <div className="absolute -left-40 top-0 h-[420px] w-[420px] rounded-full bg-[#C9A227]/10 blur-[140px]" />
+
+        <div className="absolute -right-40 bottom-0 h-[420px] w-[420px] rounded-full bg-[#C9A227]/10 blur-[140px]" />
+
+        <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#C9A227]/5 blur-[200px]" />
+
+      </div>
 
       <div className="container-custom relative z-10">
 
         {/* Heading */}
 
-        <motion.div
-          initial={{
-            opacity: 0,
-            y: 40,
-          }}
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-          }}
-          transition={{
-            duration: .6,
-          }}
-          className="text-center max-w-3xl mx-auto"
-        >
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
 
-          <span className="section-subtitle">
+          <motion.div
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: .6 }}
+            className="max-w-3xl"
+          >
 
-            Testimonials
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#C9A227]/20 bg-[#C9A227]/10 px-5 py-2">
 
-          </span>
+              <BadgeCheck
+                size={18}
+                className="text-[#E8C766]"
+              />
 
-          <h2 className="section-title mt-4">
+              <span className="text-sm font-semibold text-[#E8C766]">
 
-            What Our
+                Trusted by 10,000+ Happy Travelers
 
-            <span className="gradient-text block">
+              </span>
 
-              Travelers Say
+            </div>
 
-            </span>
+            <h2 className="mt-7 text-4xl md:text-5xl xl:text-6xl font-bold leading-tight">
 
-          </h2>
+              What Our{" "}
 
-          <p className="mt-6 max-w-2xl mx-auto">
+              <span className="gradient-text">
 
-            Discover genuine experiences shared by our
-            happy travelers. Every review reflects our
-            commitment to providing premium, comfortable
-            and memorable journeys.
+                Travelers Say
 
-          </p>
+              </span>
 
-        </motion.div>
+            </h2>
+
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-400">
+
+              We believe every journey should be comfortable,
+              luxurious and memorable. Here's what our valued
+              customers say about traveling with Saraoj Kashi Travels.
+
+            </p>
+
+          </motion.div>
+
+          {/* Navigation */}
+
+          <div className="flex items-center gap-4">
+
+            <button
+              ref={prevRef}
+              aria-label="Previous Review"
+              className="flex h-14 w-14 items-center justify-center rounded-full border border-[#C9A227]/30 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:bg-[#C9A227] hover:text-black"
+            >
+              <ChevronLeft size={20} />
+            </button>
+
+            <button
+              ref={nextRef}
+              aria-label="Next Review"
+              className="flex h-14 w-14 items-center justify-center rounded-full border border-[#C9A227]/30 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:scale-110 hover:bg-[#C9A227] hover:text-black"
+            >
+              <ChevronRight size={20} />
+            </button>
+
+          </div>
+
+        </div>
 
         {/* Slider */}
 
-        <div className="mt-16">
+        <div
+          className="mt-16"
+          onMouseEnter={() => swiperRef.current?.autoplay.stop()}
+          onMouseLeave={() => swiperRef.current?.autoplay.start()}
+        >
 
           <Swiper
-
             modules={[
-              Pagination,
               Navigation,
+              Pagination,
               Autoplay,
             ]}
-
-            spaceBetween={30}
-
-            loop={true}
-
+            loop
+            speed={700}
+            spaceBetween={24}
+            watchOverflow
+            autoHeight={false}
             autoplay={{
               delay: 4500,
               disableOnInteraction: false,
+              pauseOnMouseEnter: false,
             }}
+            onSwiper={(swiper) => {
+              swiperRef.current = swiper;
+            }}
+            onBeforeInit={(swiper) => {
+              swiper.params.navigation.prevEl =
+                prevRef.current;
 
-            navigation
-
+              swiper.params.navigation.nextEl =
+                nextRef.current;
+            }}
+            navigation={{
+              prevEl: prevRef.current,
+              nextEl: nextRef.current,
+            }}
             pagination={{
               clickable: true,
             }}
-
             breakpoints={{
-
               0: {
                 slidesPerView: 1,
+                spaceBetween: 18,
               },
-
               768: {
                 slidesPerView: 2,
+                spaceBetween: 22,
               },
-
               1200: {
                 slidesPerView: 3,
+                spaceBetween: 24,
               },
-
             }}
-
           >
 
-            {reviews.map((review) => (
-
-              <SwiperSlide key={review.id}>
-
+                        {reviews.map((review) => (
+              <SwiperSlide
+                key={review.id}
+                className="!h-auto flex"
+              >
                 <motion.div
-
                   whileHover={{
-                    y: -10,
+                    y: -8,
+                    scale: 1.02,
                   }}
-
                   transition={{
-                    duration: .35,
+                    duration: 0.35,
                   }}
-
-                  className="glass-card p-8 relative overflow-hidden group h-full flex flex-col"
+                  className="glass-card relative flex h-full w-full flex-col overflow-hidden rounded-3xl p-6 transition-all duration-500 group hover:border-[#C9A227]/30 hover:shadow-[0_20px_50px_rgba(201,162,39,.12)]"
                 >
-
                   {/* Quote */}
 
                   <Quote
-                    size={60}
-                    className="absolute right-6 top-6 text-[#C9A227]/10 group-hover:rotate-12 transition duration-500"
+                    size={42}
+                    strokeWidth={1.5}
+                    className="absolute right-5 top-5 text-[#C9A227]/10 transition-all duration-500 group-hover:rotate-12"
                   />
 
                   {/* Rating */}
 
                   <div className="flex items-center justify-between">
 
-                    <div className="flex gap-1">
+                    <div className="flex items-center gap-3">
 
-                      {Array.from({
-                        length: review.rating,
-                      }).map((_, i) => (
+                      <div className="flex">
 
-                        <Star
-                          key={i}
-                          size={18}
-                          fill="#E8C766"
-                          className="text-[#E8C766]"
-                        />
+                        {Array.from({
+                          length: Math.min(review.rating, 5),
+                        }).map((_, index) => (
+                          <Star
+                            key={index}
+                            size={15}
+                            fill="#E8C766"
+                            className="text-[#E8C766]"
+                          />
+                        ))}
 
-                      ))}
+                      </div>
 
-                    </div>
-
-                    <div className="glass-card px-3 py-1 flex items-center gap-2">
-
-                      <BadgeCheck
-                        size={15}
-                        className="text-[#E8C766]"
-                      />
-
-                      <span className="text-xs text-[#E8C766] font-semibold">
-
-                        Verified
-
+                      <span className="text-sm font-semibold text-white">
+                        {review.rating}.0
                       </span>
 
                     </div>
+
+                    <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
+                      ✓ Verified Traveler
+                    </span>
 
                   </div>
 
                   {/* Review */}
 
-                  <p className="mt-7 leading-8 text-[15px] text-zinc-300 flex-1">
+                  <blockquote className="mt-6 min-h-[120px] flex-1 text-[15px] leading-7 text-zinc-300">
 
-                    "{review.review}"
+                    “{review.review}”
 
-                  </p>
+                  </blockquote>
 
                   {/* User */}
 
-                  <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                  <div className="mt-auto border-t border-white/10 pt-6">
 
                     <div className="flex items-center gap-4">
 
                       <div
                         className="
-                        w-14
-                        h-14
-                        rounded-full
-                        bg-gradient-to-br
-                        from-[#9F7D16]
-                        via-[#E8C766]
-                        to-[#FFF2B3]
-                        flex
-                        items-center
-                        justify-center
-                        text-black
-                        text-xl
-                        font-bold"
+                          flex
+                          h-14
+                          w-14
+                          items-center
+                          justify-center
+                          rounded-full
+                          bg-gradient-to-br
+                          from-[#9F7D16]
+                          via-[#E8C766]
+                          to-[#FFF2B3]
+                          text-xl
+                          font-bold
+                          text-black
+                        "
                       >
-                        {review.name.charAt(0)}
+                        {review.name
+                          ?.trim()
+                          .split(" ")
+                          .filter(Boolean)
+                          .map((word) => word.charAt(0))
+                          .join("")
+                          .toUpperCase()}
                       </div>
 
                       <div>
 
-                        <h3 className="text-lg font-semibold">
+                        <h3 className="text-lg font-semibold text-white">
 
                           {review.name}
 
                         </h3>
 
-                        <div className="flex items-center gap-2 mt-1 text-sm text-zinc-400">
+                        <div className="mt-1 flex items-center gap-2 text-sm text-zinc-400">
 
                           <MapPin
                             size={14}
                             className="text-[#C9A227]"
                           />
 
-                          <span>
-
-                            {review.city}
-
-                          </span>
+                          <span>{review.city}</span>
 
                         </div>
 
@@ -295,49 +334,15 @@ const TestimonialsSlider = ({
 
                     </div>
 
-                    <div
-                      className="
-                      hidden
-                      lg:flex
-                      items-center
-                      justify-center
-                      w-12
-                      h-12
-                      rounded-full
-                      bg-[#C9A227]/10"
-                    >
-
-                      <Quote
-                        size={22}
-                        className="text-[#E8C766]"
-                      />
-
-                    </div>
-
                   </div>
 
-                  {/* Bottom Hover Line */}
+                  {/* Hover Line */}
 
-                  <div
-                    className="
-                    absolute
-                    bottom-0
-                    left-0
-                    h-[3px]
-                    w-0
-                    bg-gradient-to-r
-                    from-[#9F7D16]
-                    via-[#E8C766]
-                    to-[#FFF2B3]
-                    group-hover:w-full
-                    transition-all
-                    duration-500"
-                  />
+                  <div className="absolute bottom-0 left-6 right-6 h-[3px] origin-left scale-x-0 rounded-full bg-gradient-to-r from-[#9F7D16] via-[#E8C766] to-[#FFF2B3] transition-transform duration-500 group-hover:scale-x-100" />
 
                 </motion.div>
 
               </SwiperSlide>
-
             ))}
 
           </Swiper>
@@ -359,19 +364,17 @@ const TestimonialsSlider = ({
             once: true,
           }}
           transition={{
-            delay: .25,
+            delay: 0.25,
           }}
-          className="text-center mt-16"
+          className="mt-16 text-center"
         >
 
-          <a
-            href="/reviews"
+          <Link
+            to="/reviews"
             className="btn-primary inline-flex items-center gap-3"
           >
-
             View All Reviews
-
-          </a>
+          </Link>
 
         </motion.div>
 
