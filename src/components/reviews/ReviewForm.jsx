@@ -6,9 +6,11 @@ import {
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useReview } from "../../context/ReviewContext";
+import toast from "react-hot-toast";
 
-const ReviewForm = ({ addReview }) => {
-  const [loading, setLoading] = useState(false);
+const ReviewForm = () => {
+  const { createReview, submitLoading } = useReview();
   const [rating, setRating] = useState(0);
 
   const [formData, setFormData] = useState({
@@ -24,42 +26,47 @@ const ReviewForm = ({ addReview }) => {
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  setLoading(true);
+    if (!rating) {
+      toast.error("Please select a rating.");
+      return;
+    }
 
-  setTimeout(() => {
-    addReview({
-      ...formData,
-      rating,
-    });
+    try {
+      await createReview({
+        ...formData,
+        rating,
+      });
 
-    setFormData({
-      name: "",
-      city: "",
-      review: "",
-    });
+      toast.success("Review submitted successfully.");
 
-    setRating(0);
+      setFormData({
+        name: "",
+        city: "",
+        review: "",
+      });
 
-    setLoading(false);
-  }, 1000);
-};
+      setRating(0);
+    } catch (error) {
+      toast.error(error?.message || "Something went wrong");
+    }
+  };
 
   return (
-   <motion.section
-  initial={{ opacity: 0, y: 60 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.7 }}
-  className="section-padding"
->
+    <motion.section
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.7 }}
+      className="section-padding"
+    >
       <div className="container-custom">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* Left Side */}
 
-    <motion.div
+          <motion.div
             initial={{ opacity: 0, x: -60 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -119,7 +126,7 @@ const handleSubmit = async (e) => {
           </motion.div>
 
           {/* Right Side */}
-  <motion.div
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -143,10 +150,9 @@ const handleSubmit = async (e) => {
                   type="button"
                   onClick={() => setRating(star)}
                   className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300
-                    ${
-                      rating >= star
-                        ? "border-[#C9A227] bg-[#C9A227]/10 scale-110"
-                        : "border-white/10"
+                    ${rating >= star
+                      ? "border-[#C9A227] bg-[#C9A227]/10 scale-110"
+                      : "border-white/10"
                     }`}
                 >
                   <Star
@@ -203,10 +209,10 @@ const handleSubmit = async (e) => {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={submitLoading}
                 className="btn-primary w-full disabled:opacity-70"
               >
-                {loading ? (
+                {submitLoading ? (
                   <>
                     <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
                     Submitting...
@@ -226,7 +232,7 @@ const handleSubmit = async (e) => {
             </p>
           </motion.div>
         </div>
-        </div>
+      </div>
     </motion.section>
   );
 };

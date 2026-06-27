@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -17,56 +17,25 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useReview } from "../../context/ReviewContext";
 
-const dummyReviews = [
-  {
-    id: 1,
-    name: "Rahul Sharma",
-    city: "Lucknow",
-    rating: 5,
-    review:
-      "Outstanding service! The Innova Crysta was spotless, the driver was extremely polite, and our Varanasi trip became memorable. Highly recommended.",
-  },
-  {
-    id: 2,
-    name: "Priya Singh",
-    city: "Delhi",
-    rating: 5,
-    review:
-      "Very comfortable journey with excellent customer support. Booking process was smooth and the vehicle arrived exactly on time.",
-  },
-  {
-    id: 3,
-    name: "Amit Verma",
-    city: "Prayagraj",
-    rating: 5,
-    review:
-      "Professional driver, clean vehicle and transparent pricing. Definitely booking again for our next family tour.",
-  },
-  {
-    id: 4,
-    name: "Neha Gupta",
-    city: "Kanpur",
-    rating: 5,
-    review:
-      "Amazing experience. Vehicle condition was excellent and the entire journey felt luxurious.",
-  },
-  {
-    id: 5,
-    name: "Rohit Mishra",
-    city: "Ayodhya",
-    rating: 5,
-    review:
-      "Best travel company I have used recently. Everything was managed perfectly.",
-  },
-];
 
-const TestimonialsSlider = ({
-  reviews = dummyReviews,
-}) => {
+const TestimonialsSlider = () => {
+  const { reviews, loading } = useReview();
+
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const swiperRef = useRef(null);
+
+  if (loading) {
+    return (
+      <section className="testimonial-section section-padding bg-[#080808]">
+        <div className="container-custom py-20 text-center text-white">
+          Loading reviews...
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="testimonial-section section-padding relative overflow-hidden bg-[#080808]">
@@ -215,7 +184,9 @@ const TestimonialsSlider = ({
             }}
           >
 
-                        {reviews.map((review) => (
+
+            {reviews.map((review) => (
+
               <SwiperSlide
                 key={review.id}
                 className="!h-auto flex"
@@ -343,7 +314,8 @@ const TestimonialsSlider = ({
                 </motion.div>
 
               </SwiperSlide>
-            ))}
+           
+           ))}
 
           </Swiper>
 

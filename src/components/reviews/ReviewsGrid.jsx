@@ -6,8 +6,11 @@ import {
 } from "lucide-react";
 
 import { motion } from "framer-motion";
+import { useReview } from "../../context/ReviewContext";
 
-const ReviewsGrid = ({ reviews }) => {
+const ReviewsGrid = () => {
+    const { reviews, loading } = useReview();
+
   return (
     <section className="section-padding relative overflow-hidden">
 
