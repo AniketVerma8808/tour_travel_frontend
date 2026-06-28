@@ -1,53 +1,64 @@
-import { useState } from "react";
 import { ArrowRight, PhoneCall, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation } from "swiper/modules";
+import { useEffect, useState } from "react";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
-
-
-import hero1 from "../../assets/hero1.jpg";
-import hero2 from "../../assets/hero2.jpg";
-import hero3 from "../../assets/hero3.jpg";
-import hero4 from "../../assets/hero4.jpg";
+import { getAllBannersService } from "../../services/banner.service";
 
 const HeroSection = ({ onBookNow }) => {
-  const heroImages = [hero1, hero2, hero3, hero4];
+  const [heroImages, setHeroImages] = useState([]);
+
+  useEffect(() => {
+    const fetchBanners = async () => {
+      try {
+        const res = await getAllBannersService();
+        console.log("first", res.data.data)
+        const banners = res.data?.data || [];
+        setHeroImages(banners);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchBanners();
+  }, []);
 
   return (
     <section className="relative min-h-screen overflow-hidden flex items-center">
       {/* Background slider */}
-
       <div className="absolute inset-0 z-0">
-        <Swiper
-          modules={[Autoplay, EffectFade, Navigation]}
-          effect="fade"
-          loop
-          navigation={{
-            prevEl: ".hero-prev",
-            nextEl: ".hero-next",
-          }}
-          autoplay={{
-            delay: 3500,
-            disableOnInteraction: false,
-          }}
-          speed={1200}
-          className="h-full w-full"
-        >
-
-          {heroImages.map((img, index) => (
-            <SwiperSlide key={index}>
-              <div
-                className="w-full h-screen bg-cover bg-center hero-image"
-                style={{
-                  backgroundImage: `url(${img})`,
-                }}
-              />
-            </SwiperSlide>
-          ))}
-        </Swiper>
+        {heroImages.length > 0 && (
+          <Swiper
+            key={heroImages.length}
+            modules={[Autoplay, EffectFade, Navigation]}
+            effect="fade"
+            loop
+            navigation={{
+              prevEl: ".hero-prev",
+              nextEl: ".hero-next",
+            }}
+            autoplay={{
+              delay: 3500,
+              disableOnInteraction: false,
+            }}
+            speed={1200}
+            className="h-full w-full"
+          >
+            {heroImages.map((banner) => (
+              <SwiperSlide key={banner._id}>
+                <div
+                  className="w-full h-screen bg-cover bg-center hero-image"
+                  style={{
+                    backgroundImage: `url(${banner.image})`,
+                  }}
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
 
       {/* Gold Glow */}
@@ -125,7 +136,7 @@ const HeroSection = ({ onBookNow }) => {
           {/* Buttons */}
           <div className="flex flex-wrap justify-center md:justify-start gap-4 md:gap-8">
             <button
-             onClick={onBookNow}
+              onClick={onBookNow}
               className="btn-primary px-8 py-4"
             >
               Book Now
