@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import logo from "../../assets/logo.png";
 import BookingPopup from "../common/BookingPopup";
+import InquiryPopup from "../common/InquiryPopup";
 
 const navLinks = [
   { label: "Home", path: "/" },
@@ -54,9 +55,9 @@ const itemVariants = {
 };
 
 const Navbar = () => {
-
   const [isOpen, setIsOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [inquiryOpen, setInquiryOpen] = useState(false);
 
   const location = useLocation();
 
@@ -85,6 +86,36 @@ const Navbar = () => {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
+
+  useEffect(() => {
+    // Inquiry submit ho chuki hai to popup mat dikhao
+    if (localStorage.getItem("inquirySubmitted")) return;
+
+    let timer;
+
+    // Home page
+    if (location.pathname === "/") {
+      timer = setTimeout(() => {
+        setInquiryOpen(true);
+      }, 5000);
+    }
+
+    // Packages page
+    else if (location.pathname.startsWith("/packages")) {
+      timer = setTimeout(() => {
+        setInquiryOpen(true);
+      }, 10000); // 20 sec
+    }
+
+    // Vehicle page
+    else if (location.pathname.startsWith("/vehicle")) {
+      timer = setTimeout(() => {
+        setInquiryOpen(true);
+      }, 10000); // 20 sec
+    }
+
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
 
   return (
     <>
@@ -148,7 +179,7 @@ const Navbar = () => {
             >
               <Menu size={30} />
             </motion.button>
-            
+
           </div>
         </div>
       </motion.header>
@@ -157,6 +188,11 @@ const Navbar = () => {
       <BookingPopup
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
+      />
+      {/* ================= INQUIRY POPUP ================= */}
+      <InquiryPopup
+        isOpen={inquiryOpen}
+        onClose={() => setInquiryOpen(false)}
       />
 
       {/* ================= MOBILE MENU ================= */}
