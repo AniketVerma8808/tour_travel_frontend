@@ -86,32 +86,27 @@ const Navbar = () => {
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-
   useEffect(() => {
-    // Inquiry submit ho chuki hai to popup mat dikhao
+    // Inquiry submit ho chuki hai to auto popup mat dikhao
     if (localStorage.getItem("inquirySubmitted")) return;
+
+    // Agar popup already open hai to dobara timer mat chalao
+    if (inquiryOpen) return;
 
     let timer;
 
-    // Home page
     if (location.pathname === "/") {
       timer = setTimeout(() => {
         setInquiryOpen(true);
       }, 5000);
-    }
-
-    // Packages page
-    else if (location.pathname.startsWith("/packages")) {
+    } else if (location.pathname.startsWith("/packages")) {
       timer = setTimeout(() => {
         setInquiryOpen(true);
-      }, 10000); // 20 sec
-    }
-
-    // Vehicle page
-    else if (location.pathname.startsWith("/vehicle")) {
+      }, 10000);
+    } else if (location.pathname.startsWith("/vehicle")) {
       timer = setTimeout(() => {
         setInquiryOpen(true);
-      }, 10000); // 20 sec
+      }, 10000);
     }
 
     return () => clearTimeout(timer);

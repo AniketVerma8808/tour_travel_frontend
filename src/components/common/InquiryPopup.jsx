@@ -23,7 +23,7 @@ const InquiryPopup = ({ isOpen, onClose }) => {
     };
   }, [isOpen]);
 
-  // ESC Close
+  // ESC Key Close
   useEffect(() => {
     if (!isOpen) return;
 
@@ -41,12 +41,22 @@ const InquiryPopup = ({ isOpen, onClose }) => {
   }, [isOpen]);
 
   const handleClose = () => {
-    // localStorage.setItem("popupClosedAt", Date.now());
     onClose();
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "phone") {
+      const phone = value.replace(/\D/g, "");
+
+      setFormData((prev) => ({
+        ...prev,
+        phone,
+      }));
+
+      return;
+    }
 
     setFormData((prev) => ({
       ...prev,
@@ -66,6 +76,7 @@ const InquiryPopup = ({ isOpen, onClose }) => {
         res?.data?.message || "Inquiry submitted successfully."
       );
 
+      // Disable future auto popup
       localStorage.setItem("inquirySubmitted", "true");
 
       setFormData({
@@ -75,7 +86,7 @@ const InquiryPopup = ({ isOpen, onClose }) => {
         message: "",
       });
 
-      onClose();
+      handleClose();
     } catch (error) {
       toast.error(
         error?.response?.data?.message ||
@@ -93,10 +104,10 @@ const InquiryPopup = ({ isOpen, onClose }) => {
 
           {/* Overlay */}
           <motion.div
-            onClick={handleClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={handleClose}
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
           />
 
@@ -121,7 +132,7 @@ const InquiryPopup = ({ isOpen, onClose }) => {
               duration: 0.3,
               ease: "easeOut",
             }}
-            className="relative w-full max-w-xl rounded-3xl bg-[#0f0f0f] border border-yellow-600/20 shadow-2xl overflow-hidden"
+            className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl bg-[#0f0f0f] border border-yellow-600/20 shadow-2xl"
           >
             {/* Close */}
             <button
@@ -142,18 +153,16 @@ const InquiryPopup = ({ isOpen, onClose }) => {
               </h2>
 
               <p className="text-gray-400 mt-3 leading-7">
-                Planning an airport transfer,
-                Kashi Darshan, outstation trip,
-                corporate travel or holiday package?
-                Fill the form and our team will contact
-                you shortly.
+                Planning an airport transfer, Kashi Darshan,
+                outstation trip, corporate travel or holiday
+                package? Fill out the form below and our travel
+                expert will contact you shortly.
               </p>
 
               <form
                 onSubmit={handleSubmit}
                 className="space-y-5 mt-8"
               >
-
                 <input
                   type="text"
                   name="name"
@@ -174,6 +183,7 @@ const InquiryPopup = ({ isOpen, onClose }) => {
                     type="tel"
                     name="phone"
                     required
+                    inputMode="numeric"
                     maxLength={10}
                     pattern="[0-9]{10}"
                     value={formData.phone}
@@ -221,6 +231,7 @@ const InquiryPopup = ({ isOpen, onClose }) => {
                 </button>
 
               </form>
+
             </div>
           </motion.div>
         </div>
