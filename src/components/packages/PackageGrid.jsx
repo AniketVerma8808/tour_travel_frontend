@@ -70,25 +70,36 @@ const PackageGrid = ({
       viewport={{ once: true }}
       className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"
     >
-      {packages.map((pkg) => (
-        <PackageCard
-          key={pkg.id || pkg._id}
-          image={pkg.image}
-          title={pkg.title}
-          location={pkg.location}
-          duration={pkg.duration}
-          persons={pkg.persons}
-          rating={pkg.rating}
-          reviews={pkg.reviews}
-          price={pkg.price}
-          oldPrice={pkg.oldPrice}
-          description={pkg.description}
-          featured={pkg.featured}
-          discount={pkg.discount}
-          onBookNow={() => onBookNow?.(pkg)}
-          onViewDetails={() => onViewDetails?.(pkg)}
-        />
-      ))}
+      {packages.map((pkg) => {
+        // console.log(pkg);
+
+        return (
+          <PackageCard
+            key={pkg._id}
+            image={pkg.image}
+            title={pkg.title}
+            startingLocation={pkg.startingLocation}
+            duration={pkg.duration}
+               vehicle={pkg.vehicle}           // Vehicle show kar do
+            rating={5}
+            reviews={124}
+            price={pkg.price}
+            oldPrice={pkg.oldPrice}
+            description={pkg.shortDescription || pkg.description}
+            featured={pkg.isFeatured}
+            discount={
+              pkg.oldPrice > pkg.price
+                ? Math.round(
+                  ((pkg.oldPrice - pkg.price) * 100) /
+                  pkg.oldPrice
+                )
+                : 0
+            }
+            onBookNow={() => onBookNow?.(pkg)}
+            onViewDetails={() => onViewDetails?.(pkg)}
+          />
+        );
+      })}
     </motion.div>
   );
 };

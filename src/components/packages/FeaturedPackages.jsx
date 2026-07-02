@@ -1,40 +1,22 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { packagesData } from "./packagesData";
-import PackageCard from "./PackageCard";
+import PackageGrid from "./PackageGrid";
+import { usePackage } from "../../context/PackageContext";
+import { useNavigate } from "react-router-dom";
 
 const FeaturedPackages = ({ filters }) => {
-  const filteredPackages = packagesData.filter((pkg) => {
-    const searchMatch =
-      !filters.search ||
-      pkg.title
-        .toLowerCase()
-        .includes(filters.search.toLowerCase()) ||
-      pkg.location
-        .toLowerCase()
-        .includes(filters.search.toLowerCase()) ||
-      pkg.from
-        .toLowerCase()
-        .includes(filters.search.toLowerCase());
+  const navigate = useNavigate();
 
-    const durationMatch =
-      !filters.duration ||
-      pkg.duration === filters.duration;
+  const {
+    packages,
+    loading,
+    getPackages,
+  } = usePackage();
 
-    const categoryMatch =
-      !filters.category ||
-      pkg.category === filters.category;
 
-    const vehicleMatch =
-      !filters.vehicle ||
-      pkg.vehicle === filters.vehicle;
-
-    return (
-      searchMatch &&
-      durationMatch &&
-      categoryMatch &&
-      vehicleMatch
-    );
-  });
+  useEffect(() => {
+    getPackages(filters);
+  }, [filters, getPackages]);
 
   return (
     <section className="section-padding">
@@ -69,7 +51,7 @@ const FeaturedPackages = ({ filters }) => {
 
           <div className="mt-6 inline-flex items-center px-5 py-2 rounded-full gold-border">
             <span className="gold-text font-medium">
-              {filteredPackages.length}
+              {packages.length}
             </span>
 
             <span className="ml-2 text-sm text-[#c3c3c3]">
@@ -77,52 +59,13 @@ const FeaturedPackages = ({ filters }) => {
             </span>
           </div>
         </motion.div>
-
-        {/* No Results */}
-
-        {filteredPackages.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="glass-card p-10 md:p-14 text-center"
-          >
-            <h3 className="text-2xl md:text-3xl font-heading">
-              No Packages Found
-            </h3>
-
-            <p className="mt-4 max-w-xl mx-auto">
-              We couldn't find any package
-              matching your filters.
-              Try changing destination,
-              category, duration or vehicle.
-            </p>
-          </motion.div>
-        ) : (
-          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-            {filteredPackages.map((pkg, index) => (
-              <motion.div
-                key={pkg.id}
-                initial={{
-                  opacity: 0,
-                  y: 40,
-                }}
-                whileInView={{
-                  opacity: 1,
-                  y: 0,
-                }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.08,
-                }}
-                viewport={{
-                  once: true,
-                }}
-              >
-                <PackageCard pkg={pkg} />
-              </motion.div>
-            ))}
-          </div>
-        )}
+        <PackageGrid
+          packages={packages}
+          loading={loading}
+          emptyMessage="We couldn't find any package matching your filters."
+          onBookNow={(pkg) => console.log(pkg)}
+          onViewDetails={(pkg) => navigate(`/packages/${pkg.slug}`)}
+        />
       </div>
     </section>
   );

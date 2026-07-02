@@ -3,10 +3,9 @@ import { motion } from "framer-motion";
 import {
     MapPin,
     Clock3,
-    Users,
     Star,
+    Car,
     ArrowRight,
-    CalendarDays,
     Sparkles,
     BadgePercent,
 } from "lucide-react";
@@ -14,16 +13,16 @@ import {
 const PackageCard = ({
     image,
     title,
-    location,
+    startingLocation,
     duration,
-    persons,
+    vehicle = "Innova Crysta",
     rating = 5,
     reviews = 124,
-    oldPrice,
-    price,
-    description,
+    oldPrice = 0,
+    price = 0,
+    description = "",
     featured = false,
-    discount,
+    discount = 0,
     onBookNow,
     onViewDetails,
 }) => {
@@ -50,7 +49,7 @@ const PackageCard = ({
             <div className="relative h-56 lg:h-60 overflow-hidden">
 
                 <img
-                    src={image}
+                    src={image || "https://placehold.co/600x400"}
                     alt={title}
                     className="w-full h-full object-cover"
                 />
@@ -69,24 +68,19 @@ const PackageCard = ({
 
                 {featured && (
                     <div className="absolute left-5 top-5">
-
                         <div className="hero-badge !mb-0">
-
-                            <Sparkles
-                                size={15}
-                                className="mr-2 text-[#E8C766]"
+                            <Star
+                                fill="#E8C766"
+                                size={14}
                             />
-
-                            <span>Most Popular</span>
-
+                            <span>Premium Tour</span>
                         </div>
-
                     </div>
                 )}
 
                 {/* Discount */}
 
-                {discount && (
+                {discount > 0 && (
                     <div className="absolute right-5 top-5">
 
                         <div className="glass-card px-4 py-2 flex items-center gap-2">
@@ -153,7 +147,7 @@ const PackageCard = ({
 
                     <div className="flex items-center gap-2">
                         <MapPin size={16} className="text-[#E8C766]" />
-                        <span className="text-sm">{location}</span>
+                        <span className="text-sm">{startingLocation}</span>
                     </div>
 
                     <div className="h-5 w-px bg-white/10" />
@@ -166,8 +160,8 @@ const PackageCard = ({
                     <div className="h-5 w-px bg-white/10" />
 
                     <div className="flex items-center gap-2">
-                        <Users size={16} className="text-[#E8C766]" />
-                        <span className="text-sm">{persons}</span>
+                        <Car size={16} className="text-[#E8C766]" />
+                        <span className="text-sm">{vehicle}</span>
                     </div>
 
                 </div>
@@ -177,10 +171,10 @@ const PackageCard = ({
                     <div className="flex flex-wrap gap-2">
 
                         {[
-                            "🚗 AC Cab",
-                            "🏨 Hotel",
-                            "⛽ Fuel",
-                            "👨‍✈️ Driver",
+                            "🚘 Premium Vehicle",
+                            "👨‍✈️ Professional Driver",
+                            "❄️ Fully Air Conditioned",
+                            "📍 Pickup Available",
                         ].map((item, index) => (
                             <span
                                 key={index}
@@ -203,12 +197,20 @@ const PackageCard = ({
                                 Starting From
                             </p>
 
-                            <div className="flex items-end gap-2">
-                                <span className="text-3xl font-bold text-[#E8C766]">
-                                    ₹{price}
-                                </span>
+                            <div className="flex flex-col">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-3xl font-bold text-[#E8C766]">
+                                        ₹{price}
+                                    </span>
 
-                                <span className="text-sm text-zinc-400 mb-1">
+                                    {oldPrice > price && (
+                                        <span className="text-sm line-through text-zinc-500">
+                                            ₹{oldPrice}
+                                        </span>
+                                    )}
+                                </div>
+
+                                <span className="text-sm text-zinc-400">
                                     / Trip
                                 </span>
                             </div>

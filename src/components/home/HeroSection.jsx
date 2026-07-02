@@ -15,7 +15,7 @@ const HeroSection = ({ onBookNow }) => {
     const fetchBanners = async () => {
       try {
         const res = await getAllBannersService();
-        console.log("first", res.data.data)
+        // console.log("first", res.data.data)
         const banners = res.data?.data || [];
         setHeroImages(banners);
       } catch (error) {

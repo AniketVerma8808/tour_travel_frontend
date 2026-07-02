@@ -4,76 +4,26 @@ import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import PackageGrid from "../packages/PackageGrid";
-
-import img1 from "../../assets/gallery/travel1.jpeg";
-import img2 from "../../assets/gallery/travel2.jpeg";
-import img3 from "../../assets/gallery/travel3.jpeg";
-
-const featuredPackages = [
-  {
-    id: 1,
-    image: img1,
-    featured: true,
-    title: "Varanasi Spiritual Tour",
-    location: "Varanasi",
-    duration: "2 Days / 1 Night",
-    persons: "2-7 Persons",
-    rating: 5,
-    reviews: 245,
-    oldPrice: 6499,
-    price: 4999,
-    discount: 25,
-    description:
-      "Experience the divine beauty of Kashi with premium sightseeing, Ganga Aarti and luxury Innova travel.",
-  },
-  {
-    id: 2,
-    image: img2,
-    featured: false,
-    title: "Ayodhya Heritage Tour",
-    location: "Ayodhya",
-    duration: "Full Day Tour",
-    persons: "2-7 Persons",
-    rating: 5,
-    reviews: 178,
-    oldPrice: 4999,
-    price: 3499,
-    discount: 20,
-    description:
-      "Visit Ram Mandir, Hanuman Garhi and major attractions with a comfortable luxury journey.",
-  },
-  {
-    id: 3,
-    image: img3,
-    featured: false,
-    title: "Prayagraj Sangam Tour",
-    location: "Prayagraj",
-    duration: "1 Day Tour",
-    persons: "2-7 Persons",
-    rating: 5,
-    reviews: 152,
-    oldPrice: 6999,
-    price: 5499,
-    discount: 22,
-    description:
-      "Enjoy Triveni Sangam, Anand Bhavan and famous attractions with a premium chauffeur-driven vehicle.",
-  },
-];
+import { usePackage } from "../../context/PackageContext";
+import { useEffect } from "react";
 
 const FeaturedPackagesSection = () => {
   const navigate = useNavigate();
 
+  const { featuredPackages, loading, getFeaturedPackages, } = usePackage();
+
+
+
+  useEffect(() => {
+    getFeaturedPackages();
+  }, [getFeaturedPackages]);
+
   const handleBookNow = (pkg) => {
-    console.log("Book:", pkg);
-    // Later:
-    // open booking popup
+    console.log(pkg);
   };
 
   const handleViewDetails = (pkg) => {
-    console.log(pkg);
-
-    // Later:
-    // navigate(`/packages/${pkg.slug}`)
+    navigate(`/packages/${pkg.slug}`);
   };
 
   return (
@@ -124,11 +74,18 @@ const FeaturedPackagesSection = () => {
         {/* Package Grid */}
 
         <div className="mt-16">
-          <PackageGrid
-            packages={featuredPackages}
-            onBookNow={handleBookNow}
-            onViewDetails={handleViewDetails}
-          />
+
+          {loading ? (
+            <div className="text-center py-20">
+              Loading...
+            </div>
+          ) : (
+            <PackageGrid
+              packages={featuredPackages}
+              onBookNow={handleBookNow}
+              onViewDetails={handleViewDetails}
+            />
+          )}
         </div>
 
         {/* Bottom CTA */}

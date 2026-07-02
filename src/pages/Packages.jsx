@@ -1,7 +1,7 @@
 import PackagesHero from "../components/packages/PackagesHero";
 import FeaturedPackages from "../components/packages/FeaturedPackages";
 import CTA from "../components/common/CTA";
-import PackageSearch from "../components/packages/PackageSearch";
+// import PackageSearch from "../components/packages/PackageSearch";
 import { useState } from "react";
 
 const Packages = () => {
@@ -15,10 +15,10 @@ const Packages = () => {
     <>
       <PackagesHero />
 
-      <PackageSearch
+      {/* <PackageSearch
         filters={filters}
         setFilters={setFilters}
-      />
+      /> */}
 
       <FeaturedPackages
         filters={filters}

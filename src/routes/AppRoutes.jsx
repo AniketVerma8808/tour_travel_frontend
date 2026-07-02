@@ -11,6 +11,7 @@ import NotFound from "../pages/NotFound";
 import MainLayout from "../components/layout/MobileMenu";
 import ScrollToTop from "../components/common/ScrollToTop";
 import GalleryPage from "../pages/GalleryPage";
+import PackageDetails from "../pages/PackageDetails";
 
 const AppRoutes = () => {
   return (
@@ -23,6 +24,7 @@ const AppRoutes = () => {
         <Route path="services" element={<Services />} />
          <Route path="vehicle" element={<Vehicle />} />
         <Route path="packages" element={<Packages />} />
+        <Route path="/packages/:slug" element={<PackageDetails />} />
         <Route path="reviews" element={<Reviews />} />
         <Route path="contact" element={<Contact />} />
         <Route path="gallery" element={<GalleryPage />} />
