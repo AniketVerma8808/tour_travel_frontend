@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import PackageGrid from "../packages/PackageGrid";
 import { usePackage } from "../../context/PackageContext";
-import { useEffect } from "react";
+import BookingPopup from "../common/BookingPopup";
 
 const FeaturedPackagesSection = () => {
   const navigate = useNavigate();
 
   const { featuredPackages, loading, getFeaturedPackages, } = usePackage();
-
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState(null);
 
 
   useEffect(() => {
@@ -19,7 +20,8 @@ const FeaturedPackagesSection = () => {
   }, [getFeaturedPackages]);
 
   const handleBookNow = (pkg) => {
-    console.log(pkg);
+    setSelectedPackage(pkg);
+    setBookingOpen(true);
   };
 
   const handleViewDetails = (pkg) => {
@@ -117,6 +119,14 @@ const FeaturedPackagesSection = () => {
           </button>
         </motion.div>
       </div>
+      <BookingPopup
+  isOpen={bookingOpen}
+  onClose={() => {
+    setBookingOpen(false);
+    setSelectedPackage(null);
+  }}
+  selectedPackage={selectedPackage}
+/>
     </section>
   );
 };

@@ -5,7 +5,7 @@ import {
     useCallback,
 } from "react";
 
-import { getAllPackagesService, getPackageBySlugService } from "../services/package.service";
+import { getAllPackagesService, getPackageBySlugService, getPackageFiltersService } from "../services/package.service";
 
 const PackageContext = createContext(null);
 
@@ -14,6 +14,12 @@ export const PackageProvider = ({ children }) => {
     const [featuredPackages, setFeaturedPackages] = useState([]);
     const [selectedPackage, setSelectedPackage] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [filterOptions, setFilterOptions] = useState({
+        categories: [],
+        durations: [],
+        vehicles: [],
+        locations: [],
+    });
 
     /**
      * Get All Packages
@@ -42,11 +48,7 @@ export const PackageProvider = ({ children }) => {
     const getFeaturedPackages = useCallback(async () => {
         try {
             setLoading(true);
-
-            const res = await getAllPackagesService({
-                featured: true,
-                limit: 3,
-            });
+            const res = await getAllPackagesService();
 
             if (res?.data?.success) {
                 setFeaturedPackages(res.data.packages || []);
@@ -84,6 +86,37 @@ export const PackageProvider = ({ children }) => {
         }
     }, []);
 
+
+    const getPackageFilters = useCallback(async () => {
+        try {
+            const res = await getPackageFiltersService();
+
+            if (res?.data?.success) {
+                setFilterOptions({
+                    categories: res.data.filterOptions?.categories || [],
+                    durations: res.data.filterOptions?.durations || [],
+                    vehicles: res.data.filterOptions?.vehicles || [],
+                    locations: res.data.filterOptions?.locations || [],
+                });
+            } else {
+                setFilterOptions({
+                    categories: [],
+                    durations: [],
+                    vehicles: [],
+                    locations: [],
+                });
+            }
+        } catch (error) {
+            console.error("Get Package Filters Error:", error);
+
+            setFilterOptions({
+                categories: [],
+                durations: [],
+                vehicles: [],
+                locations: [],
+            });
+        }
+    }, []);
     /**
      * Clear Packages
      */
@@ -91,6 +124,13 @@ export const PackageProvider = ({ children }) => {
         setPackages([]);
         setFeaturedPackages([]);
         setSelectedPackage(null);
+
+        setFilterOptions({
+            categories: [],
+            durations: [],
+            vehicles: [],
+            locations: [],
+        });
     };
 
     return (
@@ -99,10 +139,12 @@ export const PackageProvider = ({ children }) => {
                 packages,
                 featuredPackages,
                 selectedPackage,
+                filterOptions,
                 loading,
                 getPackages,
                 getFeaturedPackages,
                 getPackageBySlug,
+                getPackageFilters,
                 clearPackages,
             }}
         >

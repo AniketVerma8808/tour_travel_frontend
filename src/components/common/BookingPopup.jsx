@@ -1,48 +1,79 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Phone, MapPin, CalendarDays, Car } from "lucide-react";
+import { createBookingService } from "../../services/booking.service";
+import toast from "react-hot-toast";
 
-const BookingPopup = ({ isOpen, onClose, selectedPackage = "" }) => {
-  const [form, setForm] = useState({
+const BookingPopup = ({ isOpen, onClose, selectedPackage = null, }) => {
+
+  const initialForm = {
     name: "",
     phone: "",
-    date: "",
+    email: "",
+    travelDate: "",
     pickup: "",
     drop: "",
-    package: selectedPackage || "",
-  });
+    vehicle: "",
+    packageId: "",
+    packageName: "",
+    numberOfPassengers: 1,
+    customerMessage: "",
+  };
+
+  const [form, setForm] = useState(initialForm);
 
   useEffect(() => {
-    setForm((prev) => ({
-      ...prev,
-      package: selectedPackage || "",
-    }));
+    if (selectedPackage) {
+      setForm((prev) => ({
+        ...prev,
+        packageId: selectedPackage._id,
+        packageName: selectedPackage.title,
+        vehicle: selectedPackage.vehicle || "",
+      }));
+    } else {
+      setForm((prev) => ({
+        ...prev,
+        packageId: "",
+        packageName: "",
+        vehicle: "",
+      }));
+    }
   }, [selectedPackage]);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const message = `
-🚖 New Booking Request
+    try {
+      const { packageName, ...payload } = form;
 
-👤 Name: ${form.name}
-📞 Phone: ${form.phone}
-📅 Date: ${form.date}
-📍 Pickup: ${form.pickup}
-📍 Drop: ${form.drop}
-🚗 Package: ${form.package || "N/A"}
-    `;
+      const res = await createBookingService(payload);
 
-    const whatsappURL = `https://wa.me/918808761609?text=${encodeURIComponent(
-      message
-    )}`;
+      toast.success(
+        res?.data?.message || "Booking created successfully."
+      );
 
-    window.open(whatsappURL, "_blank");
-    onClose();
+      setForm({
+        ...initialForm,
+        packageId: selectedPackage?._id || "",
+        packageName: selectedPackage?.title || "",
+        vehicle: selectedPackage?.vehicle || "",
+      });
+
+      onClose();
+    } catch (err) {
+      toast.error(
+        err?.response?.data?.message || "Failed to create booking."
+      );
+    }
   };
 
   return (
@@ -64,9 +95,9 @@ const BookingPopup = ({ isOpen, onClose, selectedPackage = "" }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 50 }}
             transition={{ duration: 0.3 }}
-            className="fixed z-[1000] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-xl"
+            className="fixed z-[1000] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] max-w-3xl max-h-[90vh]"
           >
-            <div className="glass-card p-6 lg:p-8 relative">
+            <div className="glass-card p-6 lg:p-8 relative overflow-y-auto max-h-[90vh]">
 
               {/* Close Button */}
               <button
@@ -84,10 +115,9 @@ const BookingPopup = ({ isOpen, onClose, selectedPackage = "" }) => {
                 Fill details and get instant WhatsApp confirmation
               </p>
 
-              {/* Form */}
               <form
                 onSubmit={handleSubmit}
-                className="mt-6 space-y-4"
+                className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4"
               >
                 {/* Name */}
                 <div className="flex items-center gap-2 bg-black/30 border border-white/10 rounded-xl px-4 py-3">
@@ -117,15 +147,27 @@ const BookingPopup = ({ isOpen, onClose, selectedPackage = "" }) => {
                   />
                 </div>
 
-                {/* Date */}
+                {/* Email */}
+                <div className="flex items-center gap-2 bg-black/30 border border-white/10 rounded-xl px-4 py-3">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address (Optional)"
+                    value={form.email}
+                    onChange={handleChange}
+                    className="bg-transparent w-full outline-none"
+                  />
+                </div>
+
+                {/* Travel Date */}
                 <div className="flex items-center gap-2 bg-black/30 border border-white/10 rounded-xl px-4 py-3">
                   <CalendarDays size={18} className="text-[#C9A227]" />
                   <input
                     type="date"
-                    name="date"
-                    value={form.date}
+                    name="travelDate"
+                    value={form.travelDate}
                     onChange={handleChange}
-                    className="bg-transparent w-full outline-none"
+                    className="bg-transparent w-full outline-none text-white [color-scheme:dark]"
                     required
                   />
                 </div>
@@ -157,25 +199,49 @@ const BookingPopup = ({ isOpen, onClose, selectedPackage = "" }) => {
                   />
                 </div>
 
-                {/* Package */}
+                {/* Number of Passengers */}
                 <div className="flex items-center gap-2 bg-black/30 border border-white/10 rounded-xl px-4 py-3">
-                  <Car size={18} className="text-[#C9A227]" />
                   <input
-                    type="text"
-                    name="package"
-                    placeholder="Selected Package (optional)"
-                    value={form.package}
+                    type="number"
+                    min="1"
+                    name="numberOfPassengers"
+                    placeholder="Number of Passengers"
+                    value={form.numberOfPassengers}
                     onChange={handleChange}
                     className="bg-transparent w-full outline-none"
                   />
                 </div>
 
+                {/* Selected Package */}
+                {selectedPackage && (
+                  <div className="md:col-span-2 flex items-center gap-2 bg-black/30 border border-white/10 rounded-xl px-4 py-3">
+                    <Car size={18} className="text-[#C9A227]" />
+                    <input
+                      type="text"
+                      value={form.packageName}
+                      readOnly
+                      className="bg-transparent w-full outline-none"
+                    />
+                  </div>
+                )}
+
+                {/* Special Request */}
+                <div className="md:col-span-2 bg-black/30 border border-white/10 rounded-xl px-4 py-3">
+                  <textarea
+                    rows={4}
+                    name="customerMessage"
+                    placeholder="Any special request (Optional)"
+                    value={form.customerMessage}
+                    onChange={handleChange}
+                    className="bg-transparent w-full outline-none resize-none"
+                  />
+                </div>
+
                 {/* Submit */}
-                <button className="btn-primary w-full mt-2">
-                  Confirm Booking on WhatsApp
+                <button className="md:col-span-2 btn-primary w-full mt-2">
+                  Confirm Booking
                 </button>
               </form>
-
               <p className="text-center text-xs text-[#8e8e8e] mt-4">
                 24/7 Support • Instant Response • Premium Service
               </p>

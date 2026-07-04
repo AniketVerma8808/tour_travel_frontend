@@ -1,22 +1,18 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import PackageGrid from "./PackageGrid";
 import { usePackage } from "../../context/PackageContext";
 import { useNavigate } from "react-router-dom";
+import BookingPopup from "../common/BookingPopup";
 
-const FeaturedPackages = ({ filters }) => {
+const FeaturedPackages = () => {
+
   const navigate = useNavigate();
 
-  const {
-    packages,
-    loading,
-    getPackages,
-  } = usePackage();
+  const { packages, loading, } = usePackage();
 
-
-  useEffect(() => {
-    getPackages(filters);
-  }, [filters, getPackages]);
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState(null);
 
   return (
     <section className="section-padding">
@@ -63,8 +59,19 @@ const FeaturedPackages = ({ filters }) => {
           packages={packages}
           loading={loading}
           emptyMessage="We couldn't find any package matching your filters."
-          onBookNow={(pkg) => console.log(pkg)}
+          onBookNow={(pkg) => {
+            setSelectedPackage(pkg);
+            setBookingOpen(true);
+          }}
           onViewDetails={(pkg) => navigate(`/packages/${pkg.slug}`)}
+        />
+        <BookingPopup
+          isOpen={bookingOpen}
+          onClose={() => {
+            setBookingOpen(false);
+            setSelectedPackage(null);
+          }}
+          selectedPackage={selectedPackage}
         />
       </div>
     </section>

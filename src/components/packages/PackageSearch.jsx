@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import {
     Search,
@@ -6,47 +7,55 @@ import {
     Car,
     RotateCcw,
 } from "lucide-react";
-import { packagesData } from "../packages/packagesData";
+import { usePackage } from "../../context/PackageContext";
 
 const PackageSearch = ({
     filters,
     setFilters,
 }) => {
-    const categories = [
-        ...new Set(
-            packagesData.map((item) => item.category)
-        ),
-    ];
+    const { filterOptions = {} } = usePackage();
 
-    const durations = [
-        ...new Set(
-            packagesData.map((item) => item.duration)
-        ),
-    ];
+    const [searchText, setSearchText] = useState(filters.search);
 
-    const vehicles = [
-        ...new Set(
-            packagesData.map((item) => item.vehicle)
-        ),
-    ];
+    const categories = filterOptions.categories || [];
+    const durations = filterOptions.durations || [];
+    const vehicles = filterOptions.vehicles || [];
+    const popularLocations = filterOptions.locations || [];
 
-    const popularLocations = [
-        ...new Set(
-            packagesData.map((item) => item.location)
-        ),
-    ];
-
-    const handleChange = (
-        field,
-        value
-    ) => {
+    const handleChange = (field, value) => {
         setFilters((prev) => ({
             ...prev,
             [field]: value,
         }));
     };
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setFilters((prev) => {
+                if (prev.search === searchText) {
+                    return prev;
+                }
+
+                return {
+                    ...prev,
+                    search: searchText,
+                };
+            });
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [searchText, setFilters]);
+
+
+    useEffect(() => {
+        if (filters.search !== searchText) {
+            setSearchText(filters.search);
+        }
+    }, [filters.search, searchText]);
+
     const clearFilters = () => {
+        setSearchText("");
+
         setFilters({
             search: "",
             duration: "",
@@ -55,13 +64,17 @@ const PackageSearch = ({
         });
     };
 
+    const selectLocation = (location) => {
+        if (location === searchText) return;
+        setSearchText(location);
+    };
     return (
         <section className="relative     z-30 px-4">
             <div className="container-custom">
 
                 <motion.div
                     initial={{
-                        
+
                         opacity: 0,
                         y: 40,
                     }}
@@ -125,13 +138,8 @@ const PackageSearch = ({
                                 <input
                                     type="text"
                                     placeholder="Search destination..."
-                                    value={filters.search}
-                                    onChange={(e) =>
-                                        handleChange(
-                                            "search",
-                                            e.target.value
-                                        )
-                                    }
+                                    value={searchText}
+                                    onChange={(e) => setSearchText(e.target.value)}
                                     className="bg-transparent flex-1 outline-none px-3 text-white placeholder:text-[#8e8e8e]"
                                 />
 
@@ -331,7 +339,6 @@ const PackageSearch = ({
 
                             </div>
                         )}
-
                     {/* Popular Locations */}
 
                     <div className="mt-10 pt-8 border-t border-white/10">
@@ -346,12 +353,7 @@ const PackageSearch = ({
                                 (item) => (
                                     <button
                                         key={item}
-                                        onClick={() =>
-                                            handleChange(
-                                                "search",
-                                                item
-                                            )
-                                        }
+                                        onClick={() => selectLocation(item)}
                                         className="px-4 py-2 rounded-full gold-border text-sm hover:bg-[#c9a227] hover:text-black transition-all duration-300"
                                     >
                                         {item}
