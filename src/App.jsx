@@ -5,6 +5,7 @@ function App() {
   return (
     <>
       <AppRoutes />
+      
       <FloatingContact phone="+919695957772" />
     </>
   );
