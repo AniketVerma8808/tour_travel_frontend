@@ -12,6 +12,8 @@ import MainLayout from "../components/layout/MobileMenu";
 import ScrollToTop from "../components/common/ScrollToTop";
 import GalleryPage from "../pages/GalleryPage";
 import PackageDetails from "../pages/PackageDetails";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import TermsConditions from "../pages/TermsConditions";
 
 const AppRoutes = () => {
   return (
@@ -28,6 +30,8 @@ const AppRoutes = () => {
         <Route path="reviews" element={<Reviews />} />
         <Route path="contact" element={<Contact />} />
         <Route path="gallery" element={<GalleryPage />} />
+        <Route path="privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="terms" element={<TermsConditions/>} />
       <Route path="*" element={<NotFound />} />
       </Route>
 
