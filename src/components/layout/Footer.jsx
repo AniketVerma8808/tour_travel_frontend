@@ -118,27 +118,30 @@ const Footer = () => {
             </h4>
 
             <div className="space-y-4">
-              <div className="flex gap-3">
+              <a
+                href="tel:+919695957772"
+                className="flex gap-3 hover:text-[#C9A227] transition-colors duration-300"
+              >
                 <Phone
                   size={18}
                   className="gold-text mt-1"
                 />
+                <span>+91 9695957772</span>
+              </a>
 
-                <span>
-                  +91 8808761609
-                </span>
-              </div>
 
-              <div className="flex gap-3">
+              {/* Email */}
+              <a
+                href="mailto:info@sarojkashitravels.com"
+                className="flex gap-3 hover:text-[#C9A227] transition-colors duration-300"
+              >
                 <Mail
                   size={18}
                   className="gold-text mt-1"
                 />
+                <span>info@sarojkashitravels.com</span>
+              </a>
 
-                <span>
-                  info@sarojkashitravels.com
-                </span>
-              </div>
 
               <a
                 href="https://maps.app.goo.gl/B1JiZpaqcqubYGW77"
@@ -159,14 +162,16 @@ const Footer = () => {
 
             <div className="flex gap-4 mt-6">
               <a
-                href="#"
+                href="https://www.instagram.com/sarojkashitravels?igsh=MXBtZXRxOHh2cmFqbA%3D%3D&utm_source=qr"
+                target="_blank"
                 className="w-11 h-11 rounded-full border border-[#C9A227]/20 flex items-center justify-center hover:bg-[#C9A227] hover:text-black transition-all duration-300"
               >
                 <FaFacebookF size={18} />
               </a>
 
               <a
-                href="#"
+                href="https://www.instagram.com/sarojkashitravels?igsh=MXBtZXRxOHh2cmFqbA%3D%3D&utm_source=qr"
+                target="_blank"
                 className="w-11 h-11 rounded-full border border-[#C9A227]/20 flex items-center justify-center hover:bg-[#C9A227] hover:text-black transition-all duration-300"
               >
                 <FaInstagram size={18} />

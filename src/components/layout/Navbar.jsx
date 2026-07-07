@@ -118,7 +118,7 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className="fixed top-0 left-0 w-full z-50 navbar-white"
+        className="fixed top-5 left-0 w-full z-50 navbar-white"
 
       >
         <div className="container-custom">

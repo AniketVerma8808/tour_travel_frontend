@@ -5,7 +5,7 @@ import JourneyTimeline from "../components/about/JourneyTimeline";
 import WhyChooseUs from "../components/about/WhyChooseUs";
 import CTA from "../components/common/CTA";
 import BookingPopup from "../components/common/BookingPopup";
-import OwnerSection from "../components/about/OwnerSection";
+// import OwnerSection from "../components/about/OwnerSection";
 
 
 const About = () => {
@@ -16,7 +16,7 @@ const About = () => {
       <AboutHero />
       <AboutStory />
       <WhyChooseUs />
-      <OwnerSection/>
+      {/* <OwnerSection/> */}
       <JourneyTimeline />
       <CTA
         title="Ready To Travel"

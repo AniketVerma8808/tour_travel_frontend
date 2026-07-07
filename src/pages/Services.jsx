@@ -1,4 +1,4 @@
-import ServicesHero from "../components/services/ServicesHero";
+// import ServicesHero from "../components/services/ServicesHero";
 import ServiceDetails from "../components/services/ServiceDetails";
 import ServiceProcess from "../components/services/ServiceProcess";
 import ServiceBenefits from "../components/services/ServiceBenefits";
@@ -7,7 +7,7 @@ import CTA from "../components/common/CTA";
 const Services = () => {
   return (
     <>
-      <ServicesHero />
+      {/* <ServicesHero /> */}
       <ServiceDetails />
       <ServiceProcess />
       <ServiceBenefits />

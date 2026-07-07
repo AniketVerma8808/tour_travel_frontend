@@ -1,8 +1,13 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
+import { useState } from "react";
+import BookingPopup from "../common/BookingPopup";
+import img from "../../../src/assets/gallery/travel4.jpeg"
 
 const VehicleHero = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [bookingOpen, setBookingOpen] = useState(false);
     return (
         <section className="relative min-h-screen flex items-center overflow-hidden pt-24 lg:pt-28">
             {/* Background */}
@@ -51,12 +56,15 @@ const VehicleHero = () => {
                         </p>
 
                         <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                            <Link
-                                to="/booking"
-                                className="btn-primary gold-glow"
+                            <button
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    setBookingOpen(true);
+                                }}
+                                className="btn-primary cursor-pointer gold-glow"
                             >
                                 Book Vehicle
-                            </Link>
+                            </button>
 
                             <Link
                                 to="/contact"
@@ -89,7 +97,7 @@ const VehicleHero = () => {
                                 />
 
                                 <span className="text-sm text-black">
-                                    Top Rated Fleet 
+                                    Top Rated Fleet
                                 </span>
                             </div>
                         </div>
@@ -98,9 +106,9 @@ const VehicleHero = () => {
 
                         <div className="glass-card overflow-hidden max-w-[650px] w-full">
                             <img
-                                src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1400"
+                                src={img}
                                 alt="Luxury Vehicle"
-                                className="w-full h-[280px] sm:h-[350px] md:h-[450px] object-cover"
+                                className="w-full  object-cover"
                             />
 
                             <div className="p-6 md:p-8">
@@ -144,6 +152,10 @@ const VehicleHero = () => {
                     </motion.div>
                 </div>
             </div>
+              <BookingPopup
+        isOpen={bookingOpen}
+        onClose={() => setBookingOpen(false)}
+      />
         </section>
     );
 };

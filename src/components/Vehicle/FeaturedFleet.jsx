@@ -1,23 +1,22 @@
 import { motion } from "framer-motion";
-
+import image1 from "../../assets/gallery/travel3.jpeg"
+import image3 from "../../assets/gallery/travel6.jpeg"
+import image2 from "../../assets/gallery/travel5.jpeg"
 const vehicles = [
   {
-    name: "Innova Crysta",
+    name: "Ertiga",
     seats: "7 Seats",
-    image:
-      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1200",
-  },
+    image:image3
+   },
   {
     name: "Toyota Etios",
     seats: "4 Seats",
-    image:
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1200",
+    image:image2
   },
   {
     name: "Swift Dzire",
     seats: "4 Seats",
-    image:
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=1200",
+    image:image1
   },
 ];
 
